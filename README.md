@@ -28,7 +28,7 @@ Payment:
 
 -->CardPayment
 
-IPaymentProcessor: interface to initiate paymens. 
+IPaymentProcessor: interface to initiate payments. 
 
 Transaction: 
 
