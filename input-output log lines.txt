@@ -1,0 +1,138 @@
+Bootstrapping Grocery application...
+---------------------------------------------------
+adding few item types...
+Item types added.
+---------------------------------------------------
+adding few items to inventory...
+Items added to inventory
+---------------------------------------------------
+adding few customers...
+customers added
+---------------------------------------------------
+Showing registed customers.
+Senior citizen customer name:[Siva] age:[61]
+Senior citizen customer name:[Somnath] age:[63]
+Employee name:[Karthik], age:[31]
+Regular customer name:[Mano] age:[26]
+Regular customer name:[Divakar] age:[28]
+-----------------------------------------------------
+waiting for a customer to enter. Please enter the customer name from the above list..
+Type stop to exit the application and print the total sale happened today
+-----------------------------------------------------
+Mano
+Customer "Mano" entered the grocery shop.
+Showing available Items in the inventory to the customer...
+---------------------------------------------------------
+Item id: [1] Item name:[arun ice creams-cassatta slice], quantity:[10].
+Item id: [2] Item name:[Lay's Classic], quantity:[10].
+Item id: [3] Item name:[Lay's American Style Cream & Onion Flavour], quantity:[10].
+Item id: [4] Item name:[arun ice creams-Butterscotch], quantity:[10].
+Item id: [5] Item name:[Amul Pomegranate juice], quantity:[10].
+Item id: [6] Item name:[Mango milkshake], quantity:[10].
+-----------------------------------------------------
+Please load the cart by typing in item Id.. Refer the above item list. 
+Note: Items can be loaded one by one. If multiple items are needed, please load the same item for the required quantity by repeating the Item Id. Thank you for your understanding. 
+Type done to place the order.
+1
+2
+77
+Item not available in inventory
+Invalid item. Please try loading from the available item list..
+6
+6
+done
+Viewing items and quantity in cart..
+Item Id: [2], item:[Lay's Classic], Quantity[1]
+Item Id: [1], item:[arun ice creams-cassatta slice], Quantity[1]
+Item Id: [6], item:[Mango milkshake], Quantity[2]
+Applying Item/Item type based discount percent if any.
+Bill amount is: 183.0
+Congratulation, You have saved [12.0] in this purchase
+How do you want to pay the bill? Cash or card?
+Type cash<space>amount that you are paying OR 
+card<space>card number<space>pin to pay
+cash 190
+transaction is successful.
+Updating Inventory items...
+Please take the change of "7.0" rupees.
+Showing Remaining Items in the inventory....
+---------------------------------------------------------
+Item id: [1] Item name:[arun ice creams-cassatta slice], quantity:[9].
+Item id: [2] Item name:[Lay's Classic], quantity:[9].
+Item id: [3] Item name:[Lay's American Style Cream & Onion Flavour], quantity:[10].
+Item id: [4] Item name:[arun ice creams-Butterscotch], quantity:[10].
+Item id: [5] Item name:[Amul Pomegranate juice], quantity:[10].
+Item id: [6] Item name:[Mango milkshake], quantity:[8].
+-----------------------------------------------------
+*****************************End of transaction******************************************
+
+
+Showing registed customers.
+Senior citizen customer name:[Siva] age:[61]
+Senior citizen customer name:[Somnath] age:[63]
+Employee name:[Karthik], age:[31]
+Regular customer name:[Mano] age:[26]
+Regular customer name:[Divakar] age:[28]
+-----------------------------------------------------
+waiting for a customer to enter. Please enter the customer name from the above list..
+Type stop to exit the application and print the total sale happened today
+-----------------------------------------------------
+Divakar
+Customer "Divakar" entered the grocery shop.
+Showing available Items in the inventory to the customer...
+---------------------------------------------------------
+Item id: [1] Item name:[arun ice creams-cassatta slice], quantity:[9].
+Item id: [2] Item name:[Lay's Classic], quantity:[9].
+Item id: [3] Item name:[Lay's American Style Cream & Onion Flavour], quantity:[10].
+Item id: [4] Item name:[arun ice creams-Butterscotch], quantity:[10].
+Item id: [5] Item name:[Amul Pomegranate juice], quantity:[10].
+Item id: [6] Item name:[Mango milkshake], quantity:[8].
+-----------------------------------------------------
+Please load the cart by typing in item Id.. Refer the above item list. 
+Note: Items can be loaded one by one. If multiple items are needed, please load the same item for the required quantity by repeating the Item Id. Thank you for your understanding. 
+Type done to place the order.
+5
+5
+3
+2
+1
+done
+Viewing items and quantity in cart..
+Item Id: [3], item:[Lay's American Style Cream & Onion Flavour], Quantity[1]
+Item Id: [5], item:[Amul Pomegranate juice], Quantity[2]
+Item Id: [2], item:[Lay's Classic], Quantity[1]
+Item Id: [1], item:[arun ice creams-cassatta slice], Quantity[1]
+Applying Item/Item type based discount percent if any.
+Bill amount is: 213.0
+Congratulation, You have saved [17.0] in this purchase
+How do you want to pay the bill? Cash or card?
+Type cash<space>amount that you are paying OR 
+card<space>card number<space>pin to pay
+card 123456789874 1233
+Transaction is successful. Generating bill.. please wait..
+Updating Inventory items...
+Showing Remaining Items in the inventory....
+---------------------------------------------------------
+Item id: [1] Item name:[arun ice creams-cassatta slice], quantity:[8].
+Item id: [2] Item name:[Lay's Classic], quantity:[8].
+Item id: [3] Item name:[Lay's American Style Cream & Onion Flavour], quantity:[9].
+Item id: [4] Item name:[arun ice creams-Butterscotch], quantity:[10].
+Item id: [5] Item name:[Amul Pomegranate juice], quantity:[8].
+Item id: [6] Item name:[Mango milkshake], quantity:[8].
+-----------------------------------------------------
+*****************************End of transaction******************************************
+
+
+Showing registed customers.
+Senior citizen customer name:[Siva] age:[61]
+Senior citizen customer name:[Somnath] age:[63]
+Employee name:[Karthik], age:[31]
+Regular customer name:[Mano] age:[26]
+Regular customer name:[Divakar] age:[28]
+-----------------------------------------------------
+waiting for a customer to enter. Please enter the customer name from the above list..
+Type stop to exit the application and print the total sale happened today
+-----------------------------------------------------
+stop
+Stopping application and printing total sale happened today
+Total sale happened today:[396.0]
