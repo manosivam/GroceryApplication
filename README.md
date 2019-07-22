@@ -2,9 +2,9 @@
  Grocery application to manage inventory and purchase
  
  Customer : abtract class with getDiscount() method
- --> RegularCustomer
- --> SeniorCitizen
- --> Employee
+  --> RegularCustomer
+  --> SeniorCitizen
+  --> Employee
 CustomerManager: Singleton class used to create new/delete customers, get Customer details from Backend.
 
 Inventory: Singleton class to manage all Inventory details like Items, ItemTypes, earningsPerDay, availableStock
