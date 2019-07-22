@@ -14,8 +14,11 @@ CustomerManager: Singleton class used to create new/delete customers, get Custom
 Inventory: Singleton class to manage all Inventory details like Items, ItemTypes, earningsPerDay, availableStock
 
 {
+
 	Items : class for Item objects. 
+	
 	ItemType: class for ItemType objects.
+	
 }
 
 DiscountManager : Singleton class used to get discount based on Customer type, Item and ItemType
