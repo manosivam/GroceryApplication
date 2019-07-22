@@ -1,0 +1,27 @@
+package in.grocery.payments;
+
+import in.grocery.payments.transactions.Transaction;
+
+/**
+ * PaymentProcessor is a standalone unit. It don't need to know about Customer or card.
+ * 
+ * @author Manosivam
+ *
+ */ 
+public class PaymentProcessor implements IPaymentProcessor{
+
+	@Override
+	public Transaction processPayment(double billAmount, double cashPaid) {
+		
+		Payment paymentGateway = new CashPayment(cashPaid);
+		return paymentGateway.processPayment(billAmount);
+	}
+
+	public Transaction processPayment(double billAmount, String cardNumber, String pin) {
+
+		Payment paymentGateway = new CardPayment(cardNumber, pin);
+		return paymentGateway.processPayment(billAmount);
+	}
+
+	
+}

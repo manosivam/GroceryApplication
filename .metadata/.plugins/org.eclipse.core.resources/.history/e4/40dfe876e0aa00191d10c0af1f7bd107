@@ -1,0 +1,17 @@
+package in.grocery.inventory.items;
+
+import in.grocery.backend.BackendLayer;
+import in.grocery.inventory.items.itemtypes.ItemTypeException;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemHandler {
+
+	/*public Item addNewItem(String name, double mrp,String itemTypeName) throws ItemTypeException, ItemException
+	{
+		Item itemToAdd = new Item(name, mrp,itemTypeName);
+		BackendLayer.addNewItemInDB(item)
+	}*/
+}

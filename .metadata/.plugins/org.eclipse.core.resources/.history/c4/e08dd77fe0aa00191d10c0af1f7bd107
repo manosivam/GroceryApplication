@@ -1,0 +1,20 @@
+package in.grocery;
+
+import java.util.Map;
+
+import in.grocery.inventory.items.Item;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface IInventoryManager {
+
+	public Map<String,Integer> getCurrentAvailableItemsDetails();
+	
+	public double getTotalSaleHappened(String dateString);
+	
+	public void printRemainingItemInInventory();
+	
+	public Item addNewItem(String name, double mrp,String itemTypeName);
+}

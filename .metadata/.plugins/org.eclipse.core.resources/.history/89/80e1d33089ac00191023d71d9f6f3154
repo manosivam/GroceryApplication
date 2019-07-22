@@ -1,0 +1,220 @@
+package in.grocery.backend;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import in.grocery.customers.Customer;
+import in.grocery.customers.CustomerException;
+import in.grocery.customers.CustomerType;
+import in.grocery.inventory.Item;
+import in.grocery.inventory.ItemException;
+import in.grocery.inventory.ItemType;
+import in.grocery.inventory.ItemTypeException;
+import in.grocery.registers.IRegister;
+import in.grocery.registers.Register;
+import in.grocery.security.Credentials;
+
+/**
+ * 
+ * <p>Backend can be anything - another service, cloud, or DB.<p>
+ *  
+ *  @author Manosivam
+ */
+public class BackendLayer {
+
+	static int customerId = 1; 
+	static int itemTypeId = 1;
+	static int itemId = 1;
+	
+	static List<Register> availableRegisters = new LinkedList<Register>();
+	
+	private BackendLayer() {
+		
+	}
+	
+	public static BackendLayer getInstance
+	{
+		
+	}
+	
+	static 
+	{
+		//Assuming there are five registers available initially. 
+		availableRegisters.add(new Register(1));
+		availableRegisters.add(new Register(2));
+		availableRegisters.add(new Register(3));
+		availableRegisters.add(new Register(4));
+		availableRegisters.add(new Register(5));
+	}
+	
+	/**
+	 * @param credentials to authenticate. 
+	 * Check the Backend- DB or any other service and authenticate the user. For simplicity, I am returning true for valid inputs.
+	 */
+	public static boolean authenticateCredential(Credentials credentials)
+	{
+		if(credentials.getUsername()!=null && credentials.getPassword()!=null)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * @param type to get discount
+	 * Check the backend, and get the discount from DB.   
+	 * @return discount percent
+	 */
+	public static double getDiscountPercentForCustomerType(CustomerType type) {
+		return DBLayer.getDiscountPercentForCustomerTypeFromDB(type);
+	}
+	
+	public static double getDiscountPercentForItemTypeOrItem(String itemTypeName, String itemName) {
+		return DBLayer.getDiscountForItemTypeOrItem(itemTypeName, itemName);
+	}
+	
+	public static double getTaxPercentForItemTypeString(String itemTypeName) throws ItemTypeException
+	{
+		return DBLayer.getTaxPercentForItemTypeFromDB(itemTypeName);
+	}
+	
+	public static Customer createCustomerInDB(Customer serializedCustomer)
+	{
+		if(serializedCustomer!=null)
+		{
+			//call backend and create the customer. 
+			
+			//For simplicity, assuming this to be success and return newCustomer obtained from DB. 
+			//I am skipping the deserialzation part. 
+			Customer responseStringFromDB = serializedCustomer;
+			
+			//now, convert the responsefromDB to object.  
+			Customer customerObjectFromDB = responseStringFromDB;
+			customerObjectFromDB.setId(customerId++);
+			
+			return customerObjectFromDB;
+		}
+		else 
+		{
+			return null;
+		}
+	}
+	
+	public static ItemType addItemTypeInDB(ItemType itemType)
+	{
+		if(itemType!=null)
+		{
+			ItemType itemTypeFromDB = itemType;  
+			itemTypeFromDB.setId(itemTypeId++);
+			
+			return itemTypeFromDB; 
+		}
+		return null;
+	}
+
+	public static Map<Item,Integer> addNewItemAndQuantityInDB(Item item, int quantity)
+	{
+		if(item!=null && quantity >0)
+		{
+			Map<Item,Integer> itemQuantityMap = new HashMap<Item,Integer>();
+			itemQuantityMap.put(item,quantity);
+			return itemQuantityMap;
+		}
+		return null;
+	}
+
+	/**
+	 * @return
+	 */
+	public static Map<Item, Integer> getAvailableItemsInInventory() {
+		return DBLayer.getAvailableItemsInInventory();
+	}
+
+	/**
+	 * @param name
+	 * @return
+	 * @throws CustomerException 
+	 */
+	public static Customer getCustomerDetails(String name) {
+		return DBLayer.getCustomerDetailsFromDB(name);
+	}
+	
+	public static IRegister getAvailableRegisterInstance()
+	{
+		int numberOfAvailableRegisters = availableRegisters.size();
+		if(numberOfAvailableRegisters>0)
+		{
+			IRegister availableRegister = availableRegisters.get(numberOfAvailableRegisters-1);
+			availableRegisters.remove(numberOfAvailableRegisters-1);
+			return availableRegister;
+		}
+		//if null customer has to wait for some more time and check for get AvailableRegister. 
+		return null;
+	}
+
+	/**
+	 * @param itemsCount
+	 * @return
+	 */
+	public static boolean updateSoldItemsDetails(Map<Item, Integer> itemsCount) {
+		return DBLayer.updateSoldItemsDetails(itemsCount);
+	}
+
+	/**
+	 * @param date
+	 * @param c
+	 * @return
+	 */
+	public static void  updateSalesPriceForTheDay(String date, double costToCompany) {
+		DBLayer.updateSalesPriceForTheDay(date,costToCompany);
+	}
+
+	/**
+	 * @param dateString
+	 * @return
+	 */
+	public static double getTotalSaleHappened(String dateString) {
+		return DBLayer.getTotalSaleHappenedForTheDayFromDB(dateString);
+	}
+
+	/**
+	 * @param item
+	 * @param quantity 
+	 * @return
+	 */
+	public static boolean isItemAvailableForTheGivenQuantityInStock(Item item, int quantity) {
+		return DBLayer.isItemAvailableForTheGivenQuantityInStock(item,quantity);
+	}
+
+	/**
+	 * @param register
+	 */
+	public static void releaseRegisterIntoCommonPool(Register register) {
+		//LRU algothrim. 
+		availableRegisters.add(0, register);
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 * @throws ItemException 
+	 */
+	public static Item getItemFromId(int id) throws ItemException {
+		return DBLayer.getItemFromId(id);
+	}
+	
+	public static Map<String, Customer> getRegisteredCustomers() {
+		return DBLayer.getRegisteredCustomers();
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public static ItemType getItemTypeFromId(int id) {
+		return DBLayer.getItemTypeFromId(id);
+	}
+	
+}

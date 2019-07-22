@@ -1,0 +1,26 @@
+package in.grocery.registers;
+
+import in.grocery.Cart;
+import in.grocery.backend.BackendLayer;
+import in.grocery.customers.Card;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class RegisterHandler implements IRegisterHandler{
+
+	public void acceptOrderAndProcessPayment(Cart cart, Card card, String pin, boolean applyDiscount) throws InterruptedException
+	{
+		Register register = BackendLayer.getAvailableRegisterInstance();
+		while(register!=null)
+		{
+			if(register == null)
+			{
+				Thread.sleep(1500);// 1.5 seconds and try again. 
+				register = BackendLayer.getAvailableRegisterInstance();
+			}
+		}
+		register.acceptOrderAndProcessPayment(cart, card, pin, applyDiscount);
+	}
+}

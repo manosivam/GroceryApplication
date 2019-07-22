@@ -1,0 +1,32 @@
+package in.grocery.payments;
+
+import in.grocery.customers.Card;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class PaymentProcessor implements IPaymentProcessor{
+
+	
+	//There will be No failure in this. 
+	@Override
+	public boolean processPayment(double billAmount, double cashPaid) {
+		if(billAmount > cashPaid)
+		{
+			return false;
+		}
+		else 
+		{
+			return true;
+		}
+	}
+
+	@Override
+	public boolean processPayment(double billAmount, Card cardDetail, String pin) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
+}

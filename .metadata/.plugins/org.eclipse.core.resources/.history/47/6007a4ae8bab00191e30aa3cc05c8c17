@@ -1,0 +1,21 @@
+package in.grocery.payments;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class CashPayment extends Payment{
+
+	double amountPaid;
+	
+	public CashPayment(double amountPaid) {
+		super(PaymentMethod.Cash);
+		this.amountPaid = amountPaid;
+	}
+
+	public double getAmountPaid()
+	{
+		return this.amountPaid;
+	}
+	
+}

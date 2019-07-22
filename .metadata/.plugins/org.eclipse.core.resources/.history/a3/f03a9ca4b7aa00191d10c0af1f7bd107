@@ -1,0 +1,11 @@
+package org.grocery.items.itemtype;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemTypeException extends Exception{
+
+	
+	
+}

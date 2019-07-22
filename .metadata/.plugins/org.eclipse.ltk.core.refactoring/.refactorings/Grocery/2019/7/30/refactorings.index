@@ -1,0 +1,84 @@
+1563675784743	Rename type 'RegisterHandler'
+1563680319214	Move compilation unit
+1563680629004	Rename type 'Cashpayment'
+1563682312300	Delete element
+1563684532099	Delete element
+1563685284453	Delete element
+1563685779517	Rename method 'getTotalSaleHappenedFromDB'
+1563694803889	Delete element
+1563695895221	Delete element
+1563696781642	Rename local variable 'paymentFromCustomer'
+1563699454733	Move compilation units
+1563706733637	Rename method 'isItemAvailableForQuantityInStock'
+1563706750442	Rename method 'isItemAvailableForQuantityInStock'
+1563706777372	Rename method 'isItemAvailableForQuantityInStock'
+1563710517919	Delete element
+1563710524767	Delete element
+1563710529644	Delete element
+1563710534017	Delete element
+1563710541192	Delete element
+1563710546249	Delete element
+1563784009573	Rename local variable 'sc'
+1563786366247	Rename field 'scanner'
+1563786956107	Rename local variable 'customerName'
+1563787490202	Rename field 'nameItemsMap'
+1563787688902	Rename local variable 'inputStringToLoadCart'
+1563788057122	Rename local variable 'customerName'
+1563788075614	Rename local variable 'itemIdToLoadTheCart'
+1563788477711	Rename method 'acceptMoneyAndProcessTheOrderForCustomer'
+1563788527797	Rename method 'acceptOrderAndProcessPayment'
+1563788698077	Rename type 'Utils'
+1563789079704	Rename package 'in.grocery.automation'
+1563789100721	Rename type 'AutomationUtils'
+1563789682210	Rename method 'getCustomerManagerInstance'
+1563790547899	Rename method 'getInputReaderInstance'
+1563791393873	Rename local variable 'customerBasedDisccount'
+1563792878199	Rename method 'readItemsAndLoadCart'
+1563792958183	Rename method 'getItemCounts'
+1563792971888	Rename field 'itemCounts'
+1563793039650	Rename method 'readPaymentInputFromCustomerAndBeginTransaction'
+1563794619075	Rename field 'nameCustomersMap'
+1563794629114	Rename field 'customerDiscount'
+1563794722416	Rename field 'itemIdItemsMap'
+1563794746956	Rename field 'earningsPerDaySoFar'
+1563795503055	Delete element
+1563796520272	Rename method 'roundOffRupee'
+1563796818539	Rename local variable 'itemsCount'
+1563797109000	Move compilation unit
+1563797705637	Move compilation unit
+1563798561744	Move compilation units
+1563798568469	Delete element
+1563798729845	Move compilation units
+1563798745271	Move compilation units
+1563798751119	Move compilation units
+1563798779196	Delete element
+1563799472108	Extract interface 'IRegister'
+1563799664194	Extract interface 'ITransaction'
+1563799780974	Extract interface 'ICashInterface'
+1563799831852	Delete element
+1563800072365	Delete element
+1563800148506	Delete element
+1563800159942	Delete element
+1563800182648	Rename type 'IInventoryManager'
+1563802070129	Rename method 'printRegisteredCustomers'
+1563804186737	Rename type 'BackendLayer'
+1563804434062	Rename method 'createNewCustomerInDB'
+1563805520870	Rename type 'InventoryManager'
+1563805528952	Rename type 'IInventoryManager'
+1563805771230	Rename method 'getTotalSaleHappened'
+1563805814472	Rename method 'addNewItem'
+1563805868910	Rename method 'addNewItemType'
+1563805904648	Rename method 'printRemainingItemInInventory'
+1563805933976	Rename method 'getCurrentAvailableItemsDetails'
+1563806087328	Rename method 'getAvailableItemsInInventory'
+1563806097395	Rename method 'getAvailableItemsQuantityPairInInventory'
+1563806112794	Rename method 'getAvailableItemsInInventory'
+1563806165342	Rename method 'getRemainingItemsQuantityInInventory'
+1563806506174	Rename type 'DBLayer'
+1563808013290	Rename method 'updateSoldItemsDetails'
+1563808026265	Rename local variable 'itemsCount'
+1563808729985	Rename local variable 'costToGrocery'
+1563808823052	Rename method 'printRemainingItemsQuantityInInventory'
+1563808840336	Rename method 'printRemainingItemQuantityDetailsInInventory'
+1563808888211	Rename field 'itemsAvailable'
+1563811712244	Rename package 'in.grocery.discounts.utils'

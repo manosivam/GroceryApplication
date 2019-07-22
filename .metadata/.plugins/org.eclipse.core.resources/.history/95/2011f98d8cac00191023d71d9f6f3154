@@ -1,0 +1,36 @@
+package in.grocery.inventory;
+
+import java.util.Map;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface IInventoryManager {
+
+	public Map<Item, Integer> getCurrentAvailableItemsDetails();
+	
+	public boolean updateSoldItemsDetails(Map<Item,Integer> itemsCount);
+	
+	public void updateSalesPriceForTheDay(String date, double costToGrocery);
+	
+	public double getTotalSaleHappened(String dateString);
+	
+	public void printRemainingItemInInventory();
+	
+	public Map<Item,Integer> addItemsInInventory(String name, double mrp, String itemTypeName, int quantity) throws ItemTypeException, ItemException;
+	
+	public boolean isItemAvailableForTheGivenQuantityInStock(Item item,int quantity);
+
+	public Map<Item, Integer> addNewItem(String name, double mrp, String itemTypeName, int quantity)
+			throws ItemTypeException, ItemException;
+	
+	public Item getItemFromId(int id) throws ItemException;
+	
+	public ItemType addNewItemType(String name) throws ItemTypeException;
+	
+	public ItemType getItemTypeFromId(int id);
+	
+	public ItemType updateTaxForItemType(ItemType type, double newTax);
+	
+}

@@ -1,0 +1,70 @@
+package in.grocery.payments;
+
+import java.util.Random;
+
+/**
+ * @author Manosivam
+ *
+ */
+
+//Payment is a standalone unit. It don't need to know about Customer or card. 
+public class PaymentProcessor implements IPaymentProcessor{
+
+
+	//TODO: Move the processPayment to CardPayment and CashPayment.
+	@Override
+	public Transaction processPayment(double billAmount, CardPayment cardPayment) {
+
+		Transaction transactionOutput = new Transaction(String.valueOf(new Random().nextLong()));
+
+		//Assuming pin and card details matches all the time.
+		//TODO: in cardpayment constructor 
+		//if(cardDetail.getCardNumber() == null || cardDetail.getCardNumber().trim().isEmpty())
+		if(cardPayment!=null)
+		{
+			transactionOutput.setTransactionStatus(false);
+		}
+		else 
+		{
+			//Use payment Gateway with card details and pin.. 
+			transactionOutput.setTransactionStatus(true);
+		}
+		return transactionOutput;
+	}
+
+	/**
+	 * @param billAmount
+	 * @param cashPaid
+	 * @return
+	 */
+	@Override
+	public Transaction processPayment(double billAmount, double cashPaid) {
+		
+		Payment paymentGateway = new CashPayment(cashPaid);
+		paymentGateway.paymentMethod();
+		
+		
+	}
+
+
+	public Transaction processPayment(double billAmount, Card card, String pin) {
+
+		Transaction transactionOutput = new Transaction(String.valueOf(new Random().nextLong()));
+
+		//Assuming pin and card details matches all the time.
+		//TODO: in cardpayment constructor 
+		//if(cardDetail.getCardNumber() == null || cardDetail.getCardNumber().trim().isEmpty())
+		if(card!=null && pin!=null)
+		{
+			transactionOutput.setTransactionStatus(false);
+		}
+		else 
+		{
+			//Use payment Gateway with card details and pin.. 
+			transactionOutput.setTransactionStatus(true);
+		}
+		return transactionOutput;
+	}
+
+	
+}

@@ -1,0 +1,9 @@
+package in.grocery.automation;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class InputReader {
+
+}

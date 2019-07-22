@@ -1,0 +1,21 @@
+package in.grocery.payments;
+
+/**
+ * @author Manosivam
+ *
+ */
+class CardPayment extends Payment{
+	
+	private Card card;
+	
+	public CardPayment(String cardNumber) {
+		super(PaymentMethod.Card);
+		this.card = new Card(cardNumber);
+	}
+
+	public Card getCard()
+	{
+		return this.card;
+	}
+	
+}

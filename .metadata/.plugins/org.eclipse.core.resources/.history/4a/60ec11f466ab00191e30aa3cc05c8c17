@@ -1,0 +1,18 @@
+package in.grocery.Billing;
+
+import in.grocery.customers.Customer;
+import in.grocery.payments.Transaction;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class BillGenerator implements IBillGenerator{
+
+	@Override
+	public Bill generateBill(Customer customer, Transaction transaction) {
+		
+		return new Bill(customer, transaction);
+	}
+
+}

@@ -1,0 +1,44 @@
+package in.grocery.payments;
+
+import java.util.Random;
+
+import in.grocery.payments.transactions.CardTransaction;
+import in.grocery.payments.transactions.Transaction;
+
+/**
+ * @author Manosivam
+ *
+ */
+class CardPayment extends Payment{
+	
+	private Card card;
+	
+	public CardPayment(String cardNumber, String pin) {
+		super(PaymentMethod.Card);
+		this.card = new Card(cardNumber,pin);
+	}
+
+	public Card getCard()
+	{
+		return this.card;
+	}
+
+	@Override
+	public Transaction processPayment(double billAmount) {
+		Transaction transactionOutput = new CardTransaction(String.valueOf(new Random().nextLong()));
+
+		//Assuming pin and card details matches all the time.
+		//TODO: move this to cardpayment constructor 
+		//if(cardDetail.getCardNumber() == null || cardDetail.getCardNumber().trim().isEmpty())
+		if(this.card.getCardNumber()==null && this.card.getPin()==null)
+		{
+			transactionOutput.setTransactionStatus(false);
+		}
+		else 
+		{
+			//Use payment Gateway with card details and pin.. 
+			transactionOutput.setTransactionStatus(true);
+		}
+		return transactionOutput;
+	}
+}

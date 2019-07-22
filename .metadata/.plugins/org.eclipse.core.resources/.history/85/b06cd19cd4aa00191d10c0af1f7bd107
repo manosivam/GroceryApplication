@@ -1,0 +1,14 @@
+package org.grocery.inventory.items;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemHandler {
+
+	public Item addNewItem(String name, double mrp,String itemTypeName)
+	{
+		Item itemToAdd = new Item(name, mrp,itemTypeName);
+		
+	}
+}

@@ -1,0 +1,37 @@
+package in.grocery;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Inventory {
+
+	private Map<String, Integer> availableItemQuantityPair;
+	//private Map<String, Integer> soldOutItemQuantityPair;
+	private Map<String, Integer> totalSaleHappenedPerDay;
+	private static Inventory inventory;
+	
+	private Inventory()
+	{
+		//Get the details from DB. 
+		availableItemQuantityPair = new HashMap<String, Integer>();
+		totalSaleHappenedPerDay = new HashMap<String, Integer>();
+	}
+	
+	public static Inventory getInventoryInstance()
+	{
+		if(inventory == null)
+		{
+			inventory = new Inventory();
+		}
+		return inventory; 
+	}
+	
+}
+
+

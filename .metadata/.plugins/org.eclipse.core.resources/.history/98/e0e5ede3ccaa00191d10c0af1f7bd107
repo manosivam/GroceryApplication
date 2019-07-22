@@ -1,0 +1,9 @@
+package org.grocery.inventory.items.itemtypes;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemTypeConstants {
+
+}

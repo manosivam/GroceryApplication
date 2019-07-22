@@ -1,0 +1,24 @@
+package in.grocery.Billing;
+
+import in.grocery.customers.Customer;
+import in.grocery.payments.Transaction;
+import in.grocery.utils.DateUtil;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Bill {
+
+	Customer customerDetails;
+	Transaction transactionDetails;
+	String purchaseDateString;
+	
+	public Bill(Customer customer, Transaction transaction)
+	{
+		this.customerDetails = customer; 
+		this.transactionDetails = transaction;
+		this.purchaseDateString = DateUtil.getCurrentDate();
+	}
+	
+}

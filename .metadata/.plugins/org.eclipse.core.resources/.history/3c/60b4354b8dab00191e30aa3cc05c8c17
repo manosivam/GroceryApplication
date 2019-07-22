@@ -1,0 +1,19 @@
+package in.grocery.payments;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class PaymentHelper {
+
+	public Payment getPaymentInstance(double cashPaid)
+	{
+		return new CashPayment(cashPaid); 
+	}
+	
+	public Payment getPaymentInstance(Card card, String pin)
+	{
+		return new CardPayment(card, pin); 
+	}
+	
+}

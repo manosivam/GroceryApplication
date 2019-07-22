@@ -1,0 +1,12 @@
+package org.grocery.security;
+
+/**
+ * @author Manosivam
+ *
+ */
+//making it package specific. (default modifier)
+interface IAuthenticator {
+
+	boolean authenticateCredential(Credentials credentials);
+	boolean changePassword(int emp_id, string oldPassword, string newPassword);
+}

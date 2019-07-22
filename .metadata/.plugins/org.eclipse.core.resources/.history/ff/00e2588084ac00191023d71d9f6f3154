@@ -1,0 +1,132 @@
+package in.grocery.customers;
+
+import java.util.Map;
+
+import in.grocery.backend.BackendLayer;
+import in.grocery.logs.Logger;
+
+/**
+ * 
+ * <p>
+ * 	This is similar to controller code. 
+ * 	This will just accept input and call appropriate Handler which will take care of processing and backend call. 
+ * <p>
+ * 
+ * @author Manosivam
+ */
+public class CustomerManager implements ICustomerManager{
+	
+	private static CustomerManager customerManager;
+	private Logger logger;
+	
+	private CustomerManager() {
+		logger = Logger.getInstance();
+	}
+	
+	public static CustomerManager getInstance()
+	{
+		if(customerManager == null)
+		{
+			customerManager = new CustomerManager();
+		}
+		return customerManager;
+	}
+	
+	private Customer createNewCustomerInDB(String name, int age, String accountName, String accountPassword) throws CustomerException
+	{
+		Logger logger = Logger.getInstance();
+		Customer customer = null;
+		CustomerType type = CustomerType.REGULAR;
+		
+		if(accountName!=null || accountPassword !=null)
+		{
+			type = CustomerType.EMPLOYEE;
+		}
+		else if(age >60) 
+		{
+			type = CustomerType.SENIOR_CITIZEN;
+		}
+		
+		switch(type)
+		{
+		case REGULAR:
+			logger.logMessage("creating Regular customer having name:["+name+"] age:["+age+"]");
+			customer = new RegularCustomer(name, age);
+		break;
+		case SENIOR_CITIZEN:
+			logger.logMessage("creating Senior citizen customer having name:["+name+"] age:["+age+"]");
+			customer = new SeniorCitizen(name,age);
+			break;
+		case EMPLOYEE:
+			logger.logMessage("creating Employee having name:["+name+"], age:["+age+"], accountName:["+accountName+"], accountPassword:[****](masked for security purpose)" );
+			customer = new Employee(name, age, accountName, accountPassword);
+			break;
+		}
+		
+		//customer can be serialized to json or xml and sent to backend. 
+		
+		Customer serializedCustomer = customer;
+		
+		Customer newCustomerFromDB = BackendLayer.createCustomerInDB(serializedCustomer);
+		
+		if(newCustomerFromDB!=null)
+		{
+			logger.logMessage("Customer ["+ newCustomerFromDB.getName()+ "] created successfully in DB");
+		}
+		else 
+		{
+			logger.logMessage("Something went wrong in backend!!");
+		}
+		
+		return newCustomerFromDB;
+	}
+	
+	
+	@Override
+	public Customer createNewCustomer(String name, int age) throws CustomerException {
+		// Create Customer object with the supplied input and call backend to write new customer in DB.
+		// on success, return Customer object which can be use in client to show or assert 
+		return createNewCustomerInDB(name, age, null, null);
+	}
+
+	@Override
+	public Customer createNewCustomer(String name, int age, String accountName, String accountPassword) throws CustomerException {
+		// Create Customer object with the supplied input and call backend to write new customer in DB.
+		// on success, return Customer object which can be use in client to show or assert 
+		return createNewCustomerInDB(name, age, accountName, accountPassword);
+	}
+	
+	@Override
+	public Customer getCustomerFromBackEnd(String name) throws CustomerException {
+		return BackendLayer.getCustomerDetails(name);
+	}
+	
+	public void printRegisteredCustomers()
+	{
+		Map<String, Customer> nameCustomerMap = BackendLayer.getRegisteredCustomers();
+		for(Map.Entry<String, Customer> entry: nameCustomerMap.entrySet())
+		{
+			Customer customer = entry.getValue(); 
+			CustomerType type = customer.getType();
+			switch(type)
+			{
+			case REGULAR:
+				logger.logMessage("Regular customer name:["+customer.getName()+"] age:["+customer.getAge()+"]");
+			break;
+			case SENIOR_CITIZEN:
+				logger.logMessage("Senior citizen customer name:["+customer.getName()+"] age:["+customer.getAge()+"]");
+				break;
+			case EMPLOYEE:
+				logger.logMessage("Employee name:["+customer.getName()+"], age:["+customer.getAge()+"]" );
+				break;
+			}
+		}
+	}
+
+	@Override
+	public boolean deleteEmployee(String name) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+}

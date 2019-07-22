@@ -1,0 +1,23 @@
+package org.grocery.security;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Authenticator implements IAuthenticator{
+
+	@Override
+	public boolean authenticateCredential(Credentials credentials) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean changePassword(int emp_id, String oldPassword, String newPassword) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
+	
+}

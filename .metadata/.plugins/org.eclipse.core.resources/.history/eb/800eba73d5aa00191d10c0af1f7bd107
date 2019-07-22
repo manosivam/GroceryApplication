@@ -1,0 +1,9 @@
+package org.grocery.inventory;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Inventory {
+
+}

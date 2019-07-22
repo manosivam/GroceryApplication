@@ -1,0 +1,32 @@
+package in.grocery.taxes;
+
+import in.grocery.backend.BackendLayer;
+import in.grocery.inventory.ItemTypeException;
+
+/**
+ * <p>
+ * used to find taxes of the item. 
+ * <p>
+ * @author Manosivam
+ *
+ */
+public class TaxFinder implements ITaxFinder{
+
+	private static TaxFinder taxFinder;
+	
+	private TaxFinder(){}
+	
+	public static TaxFinder getInstance()
+	{
+		if(taxFinder == null)
+		{
+			taxFinder = new TaxFinder();
+		}
+		return taxFinder;
+	}
+	
+	public double getTaxBasedOnItemType(String itemTypeName) throws ItemTypeException {
+		return BackendLayer.getTaxPercentForItemTypeString(itemTypeName);
+	}
+	
+}

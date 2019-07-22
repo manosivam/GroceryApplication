@@ -1,0 +1,9 @@
+package org.grocery.util.discount;
+
+/**
+ * @author Manosivam
+ * 
+ */
+interface IDiscountManager {
+
+}

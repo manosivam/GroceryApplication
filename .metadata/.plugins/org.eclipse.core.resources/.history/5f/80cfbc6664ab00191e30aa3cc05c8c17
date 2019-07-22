@@ -1,0 +1,38 @@
+package in.grocery.Billing;
+
+import in.grocery.Cart;
+import in.grocery.customers.Customer;
+import in.grocery.payments.PaymentMethod;
+import in.grocery.payments.Transaction;
+import in.grocery.utils.DateUtil;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Bill {
+
+	/**
+	1. with items in the cart.
+	2. Transaction number
+	3. purchase date. Current date.
+	4. Customer name. 
+	5. Register id. 
+	*/
+	Cart itemsPurchased;
+	String transactionNumber;
+	String customerName;
+	PaymentMethod paymentMethod;
+	
+	Customer customerDetails;
+	Transaction transactionDetails;
+	String purchaseDateString;
+	
+	public Bill(Customer customer, Transaction transaction)
+	{
+		this.customerDetails = customer; 
+		this.transactionDetails = transaction;
+		this.purchaseDateString = DateUtil.getCurrentDate();
+	}
+	
+}

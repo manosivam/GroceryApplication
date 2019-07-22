@@ -1,0 +1,10 @@
+package org.grocery.items.itemtypes;
+
+/**
+ * @author Manosivam
+ *
+ */
+interface IItemTypeHandler {
+	
+	
+}

@@ -1,0 +1,9 @@
+package org.grocery.util.discount;
+
+/**
+ * @author Manosivam
+ * Note: accessible only in this package. The interface is not public. 
+ */
+interface IDiscountManager {
+
+}

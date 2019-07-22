@@ -1,0 +1,19 @@
+package org.grocery.customer;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class RegularCustomer extends Customer{
+
+	/**
+	 * @param name
+	 * @throws CustomerException 
+	 */
+	public RegularCustomer(String name, int age) throws CustomerException {
+		super(name,age);
+		this.type = CustomerType.REGULAR;
+	}
+
+	
+}

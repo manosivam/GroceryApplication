@@ -1,0 +1,14 @@
+package in.grocery.Billing;
+
+import in.grocery.customers.Cart;
+import in.grocery.customers.Customer;
+import in.grocery.payments.transactions.Transaction;
+
+/**
+ * @author Manosivam
+ *
+ */
+interface IBillGenerator {
+
+	public Bill generateBill(Cart cart, String customerName, Transaction transaction, int registerId);	
+}

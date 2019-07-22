@@ -1,0 +1,17 @@
+package in.grocery;
+
+import java.util.Map;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface IInventoryManager {
+
+	public Map<String,Integer> getCurrentAvailableItemsDetails();
+	
+	public double getTotalSaleHappened(String dateString);
+	
+	
+	
+}

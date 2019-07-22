@@ -1,0 +1,103 @@
+package in.grocery.Drivers;
+
+import java.text.DecimalFormat;
+import java.util.Scanner;
+
+import in.grocery.Cart;
+import in.grocery.InventoryManager;
+import in.grocery.backend.DBLayer;
+import in.grocery.customers.Customer;
+import in.grocery.customers.CustomerException;
+import in.grocery.customers.Employee;
+import in.grocery.customers.SeniorCitizen;
+import in.grocery.customers.utils.CustomerManager;
+import in.grocery.inventory.items.ItemException;
+import in.grocery.inventory.items.ItemHandler;
+import in.grocery.logs.Logger;
+import in.grocery.payments.transactions.Transaction;
+import in.grocery.registers.Register;
+import in.grocery.registers.RegisterHelper;
+import in.grocery.utils.DateUtil;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Driver {
+
+	static Logger logger = Logger.getInstance();
+
+	static 
+	{
+		logger.logMessage("Bootstrapping Grocery application...");
+		logger.logMessage("---------------------------------------------------");
+		
+		logger.logMessage("adding few item types...");
+		DBLayer.addFewItemTypes();
+		logger.logMessage("Item types added.");
+		logger.logMessage("---------------------------------------------------");
+		
+		logger.logMessage("adding few items to inventory...");
+		DBLayer.addFewItems();
+		logger.logMessage("Items added to inventory");
+		logger.logMessage("---------------------------------------------------");
+		
+		logger.logMessage("adding few customers...");
+		DBLayer.addFewCustomers();
+		logger.logMessage("customers added");
+		logger.logMessage("---------------------------------------------------");
+	}
+	
+	public static void main(String[] args){
+		
+		InputReader inputReader = InputReader.getInstance();
+		DriverUtils utils = DriverUtils.getInstance();
+		
+		for(;;)
+		{
+			String customerNameOrStopApplicationInput = inputReader.readCustomerNameOrInputToStopTheApplication();
+			if(customerNameOrStopApplicationInput.equalsIgnoreCase("stop"))
+			{
+				logger.logMessage("Stopping application and printing total sale happened today");
+				break;
+			}
+			
+			Customer customer = null;
+			try {
+				customer = CustomerManager.getInstance().getCustomerFromBackEnd(customerNameOrStopApplicationInput);
+			} catch (CustomerException e) {
+				logger.logMessage(e.getMessage());
+				logger.logMessage("Stopping application and printing total sale happened today..");
+				break;
+			}
+			logger.logMessage("Customer \""+customerNameOrStopApplicationInput+"\" entered the grocery shop.");
+			
+			utils.displayItemsInInventoryToCustomer();
+			
+			utils.readItemsAndLoadCart(customer.getCart());
+			
+			Cart cart = customer.getCart();
+			if(cart!=null && cart.getItemCounts()!=null && cart.getItemCounts().size()>0)
+			{
+				customer.seeAvailableItemsInCart();
+				
+				RegisterHelper registerHelper = RegisterHelper.getRegisterHelperInstance();
+				Register register = registerHelper.getAvailableRegisterInstance();
+				
+				double billAmount = utils.applyDiscountsByDefaultAndGetFinalBillAmount(cart, customer.getType(), customer.getDiscountPercent(), register);
+				
+				Transaction transaction = utils.readPaymentInputFromCustomerAndBeginTransaction(register,billAmount,customer);
+				utils.verifyTransactionStatus(transaction);
+				
+				utils.displayRemainingItemInInventory();
+			}
+			else
+			{
+				logger.logMessage("Your cart is empty. Thank you "+customer.getName()+" for visiting the shop");
+			}
+			logger.logMessage("*****************************End of transaction******************************************");
+		
+		}
+		utils.printTotalSaleforToday();
+	}
+}

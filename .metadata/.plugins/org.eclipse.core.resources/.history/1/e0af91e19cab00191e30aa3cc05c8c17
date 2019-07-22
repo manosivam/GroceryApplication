@@ -1,0 +1,39 @@
+package in.grocery.payments.transactions;
+
+import in.grocery.payments.PaymentMethod;
+
+/**
+ * @author Manosivam
+ *
+ */
+
+public class CardTransaction extends Transaction{
+
+	private double payBackCash;
+	
+	public CardTransaction() {
+		super();
+		this.payBackCash = 0.0;
+		this.transactionMode = PaymentMethod.Card;
+	}
+	
+	public CardTransaction(String transactionNumber)
+	{
+		super(transactionNumber);
+	}
+	
+	public double getPayBackAmount()
+	{
+		return this.payBackCash;
+	}
+	
+	public void setPayBackCash(double payBackCash)
+	{
+		this.payBackCash = payBackCash;
+	}
+
+	@Override
+	public double getPayBackAmountIfAny() {
+		return this.payBackCash;
+	}
+}

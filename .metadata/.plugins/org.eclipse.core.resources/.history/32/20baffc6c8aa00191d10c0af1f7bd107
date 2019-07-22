@@ -1,0 +1,70 @@
+package org.grocery.customers.utils;
+
+import org.grocery.backend.BackendLayer;
+import org.grocery.customers.customer.Customer;
+import org.grocery.customers.customer.CustomerException;
+import org.grocery.customers.customer.CustomerType;
+import org.grocery.customers.customer.Employee;
+import org.grocery.customers.customer.RegularCustomer;
+import org.grocery.customers.customer.SeniorCitizen;
+import org.grocery.logs.Logger;
+
+/**
+ * @author Manosivam
+ * purpose : this can be used to create customers in DB and get appropriate customer Instance 
+ */
+public class CustomerHandler {
+	//TODO: do we need interface for this?? 
+	// this is not exposed to client or as any other third party api. only customerManager will be exposed.
+	
+	public Customer createNewCustomerInDB(String name, int age, String accountName, String accountPassword) throws CustomerException
+	{
+		Logger logger = Logger.getInstance();
+		Customer customer = null;
+		CustomerType type = CustomerType.REGULAR;
+		
+		if(accountName!=null || accountPassword !=null)
+		{
+			type = CustomerType.EMPLOYEE;
+		}
+		else if(age >60) 
+		{
+			type = CustomerType.SENIOR_CITIZEN;
+		}
+		
+		switch(type)
+		{
+		case REGULAR:
+			logger.logMessage("creating regular customer having name:["+name+"] age:["+age+"]");
+			customer = new RegularCustomer(name, age);
+		break;
+		case SENIOR_CITIZEN:
+			logger.logMessage("creating Senior citizen customer having name:["+name+"] age:["+age+"]");
+			customer = new SeniorCitizen(name,age);
+			break;
+		case EMPLOYEE:
+			logger.logMessage("creating employee having name:["+name+"], age:["+age+"], accountName:["+accountName+"], accountPassword:[****](masked for security purpose)" );
+			customer = new Employee(name, age, accountName, accountPassword);
+			break;
+		}
+		
+		
+		//customer can be serialized to json or xml and sent to backend. 
+		
+		Customer serializedCustomer = customer;
+		
+		Customer newCustomerFromDB = BackendLayer.createCustomerInDB(serializedCustomer);
+		
+		if(newCustomerFromDB!=null)
+		{
+			logger.logMessage("Customer ["+ newCustomerFromDB.getName()+ "] created successfully in DB");
+		}
+		else 
+		{
+			logger.logMessage("Something went wrong in backend!!");
+		}
+		
+		return newCustomerFromDB;
+	}
+	
+}

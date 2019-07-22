@@ -1,0 +1,68 @@
+package in.grocery.registers;
+
+import in.grocery.backend.BackendLayer;
+import in.grocery.customers.CustomerType;
+import in.grocery.logs.Logger;
+
+
+/**
+ * <p>Singleton class only contains utility for Register class</p>
+ * 
+ * @author Manosivam
+ *
+ */
+public class RegisterHelper{
+
+	static RegisterHelper registerHelper;
+	
+	private RegisterHelper() {}
+	
+	public static RegisterHelper getRegisterHelperInstance()
+	{
+		if(registerHelper == null)
+		{
+			registerHelper = new RegisterHelper();
+		}
+		return registerHelper;
+	}
+	
+	/**
+	 * Get the next available register from the available register pool.
+	 * If Register is not available, it will wait for 1.5s and look for any available registers in the pool if any released.
+	 * Registers will be released after completion of a transaction.
+	 * It used LRU algorithm using LinkedList to allocate the instance to be used. 
+	 * @see #releaseRegisterIntoCommonPool(Register register)
+	 */
+	public Register getAvailableRegisterInstance()
+	{
+		Register register = BackendLayer.getAvailableRegisterInstance();
+		
+		if(register == null)
+		{
+			try {
+				Thread.sleep(1500); // 1.5 seconds and try again. 
+			} catch (InterruptedException e) {
+				logger.logMessage(e.getMessage());
+			}
+		}
+		while(register==null)
+		{
+			register = BackendLayer.getAvailableRegisterInstance();
+		}
+		return register;
+	}
+	
+	/**
+	 * @param register - register to be released to the common pool. will be called after the transaction is completed. 
+	 */
+	public void releaseRegisterIntoCommonPool(Register register)
+	{
+		BackendLayer.releaseRegisterIntoCommonPool(register);
+	}
+
+	public double getCustomerBasedDiscountPercent(CustomerType type)
+	{
+		return BackendLayer.getDiscountPercentForCustomerType(type);
+	}
+
+}

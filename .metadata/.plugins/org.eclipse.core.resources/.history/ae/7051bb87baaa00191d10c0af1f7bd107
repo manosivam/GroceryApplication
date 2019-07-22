@@ -1,0 +1,21 @@
+package org.grocery.items.itemtype;
+
+import org.grocery.backend.BackendLayer;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemTypeHandler {
+
+	
+	public ItemType createNewItemTypeInDB(String name) throws ItemTypeException
+	{
+		ItemType type = new ItemType(name); 
+		
+		ItemType itemTypeFromDB = BackendLayer.createItemTypeInDB(type);
+		
+		return itemTypeFromDB;
+	}
+	
+}

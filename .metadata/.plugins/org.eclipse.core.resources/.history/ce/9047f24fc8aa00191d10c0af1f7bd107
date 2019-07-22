@@ -1,0 +1,29 @@
+package org.grocery.inventory.items.item;
+
+import org.grocery.inventory.items.itemtype.ItemType;
+import org.grocery.inventory.items.itemtype.ItemTypeException;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Item {
+
+	int id;
+	String name; 
+	double mrp; 
+	ItemType type;
+	//TODO: Tax tax; 
+	
+	public Item(String name, double mrp,String itemTypeName) throws ItemTypeException, ItemException
+	{
+		if(name == null || mrp<0 || name.trim().isEmpty())
+		{
+			throw new ItemException("invalid name or mrp");
+		}
+		this.name = name;
+		this.mrp = mrp;
+		this.type = new ItemType(itemTypeName);
+	}
+	
+}

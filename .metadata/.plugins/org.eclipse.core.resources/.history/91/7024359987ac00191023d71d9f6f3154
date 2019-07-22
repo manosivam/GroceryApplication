@@ -1,0 +1,110 @@
+package in.grocery.customers;
+
+import java.util.Map;
+
+import in.grocery.inventory.Item;
+import in.grocery.inventory.ItemException;
+import in.grocery.logs.Logger;
+
+/**
+ * @author Manosivam
+ *
+ */
+
+public abstract class Customer{
+	
+	Logger logger = Logger.getInstance();
+	
+	private int id; // id- after customer creation id will be populated from backend layer.
+	private int age; //input from Client. Can be used for discount purposes. senior citizen discount will be applied if age>60
+	private String name; //input from Client. For simplicity purpose, Assuming Customer name is unique.  
+	protected CustomerType type; 
+	protected double discountPercent;
+	protected Cart cart;
+	
+	Customer() {}
+	
+	public Customer(String name, int age) throws CustomerException
+	{
+		if(name == null || name.trim().isEmpty())
+		{
+			throw new CustomerException("required customer name is empty or null. Please enter a valid name");
+		}
+		if(age<5)
+		{
+			throw new CustomerException("Please enter a valid age. Minimum permissible age is 6");
+		}
+		this.name = name;
+		this.age = age;
+		this.cart = new Cart();//assigning customer with a new cart. 
+	}
+	
+	public int getId()
+	{
+		return this.id;
+	}
+	
+	//TODO. discount is dangling.??
+	public abstract double getDiscountPercent();
+	
+	public int getAge()
+	{
+		return this.age;
+	}
+	
+	public String getName()
+	{
+		return this.name;
+	}
+	
+	public CustomerType getType()
+	{
+		return this.type;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	public void setAge(int age)
+	{
+		this.age = age;
+	}
+	
+	public Cart getCart()
+	{
+		return this.cart;
+	}
+	
+	public void loadCart(Item item) throws ItemException
+	{
+		this.cart.loadItem(item);
+	}
+	
+	public void emptyCart()
+	{
+		this.cart = new Cart();
+	}
+	
+	public void seeAvailableItemsInCart()
+	{
+		logger.logMessage("Viewing items and quantity in cart..");
+		if(this.cart.getItemQuantityPair()!=null && this.cart.getItemQuantityPair().size()>0)
+		{
+			for(Map.Entry<Item, Integer> entry: cart.getItemQuantityPair().entrySet())
+			{
+				logger.logMessage("Item Id: ["+entry.getKey().getId()+"], item:["+ entry.getKey().getName() + "], Quantity[" +entry.getValue()+"]");
+			}
+		}
+		else 
+		{
+			logger.logMessage("Your cart is empty");
+		}
+	}
+	
+}

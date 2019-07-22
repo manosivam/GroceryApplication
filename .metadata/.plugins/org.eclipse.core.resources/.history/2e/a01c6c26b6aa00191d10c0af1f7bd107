@@ -1,0 +1,27 @@
+package org.grocery.items.item;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemType {
+	int id; // id from DB. after item type creation in DB, 
+	String name; //item type name from client.  
+	
+	
+	protected ItemType(String name)
+	{
+		this.name = name;
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+	
+}

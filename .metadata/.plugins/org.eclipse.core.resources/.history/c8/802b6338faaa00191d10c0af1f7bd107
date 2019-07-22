@@ -1,0 +1,14 @@
+package in.grocery.customers;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Card {
+
+	private String cardNumber;
+	private String pin;
+	
+	
+	
+}

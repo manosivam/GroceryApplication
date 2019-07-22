@@ -1,0 +1,38 @@
+package in.grocery.registers;
+
+import in.grocery.backend.BackendLayer;
+import in.grocery.logs.Logger;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class RegisterHelper{
+
+	Logger logger = Logger.getInstance();
+	
+	public Register getAvailableRegisterInstance()
+	{
+		Register register = BackendLayer.getAvailableRegisterInstance();
+		
+		if(register == null)
+		{
+			try {
+				Thread.sleep(1500); // 1.5 seconds and try again. 
+			} catch (InterruptedException e) {
+				logger.logMessage(e.getMessage());
+			}
+		}
+		while(register==null)
+		{
+			register = BackendLayer.getAvailableRegisterInstance();
+		}
+		return register;
+	}
+	
+	/*public boolean acceptOrderAndProcessPayment(Customer customer, String pin, boolean applyDiscountsOnCustomerType, 
+			boolean applyDisccountsOnItemOrItemType) throws InterruptedException
+	{
+		return register.acceptOrderAndProcessPayment(customer, pin, applyDiscountsOnCustomerType, applyDisccountsOnItemOrItemType);
+	}*/
+}

@@ -1,0 +1,24 @@
+package org.grocery.util.discount;
+
+import org.grocery.customer.CustomerType;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class DiscountManager implements IDiscountManager{
+
+	@Override
+	public int getDiscount(CustomerType type) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getDiscount(ItemType type) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
+}

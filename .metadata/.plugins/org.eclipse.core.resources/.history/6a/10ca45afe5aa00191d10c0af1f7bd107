@@ -1,0 +1,40 @@
+package in.grocery;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Inventory {
+
+	private Map<Item, Integer> availableItemQuantityPair;
+	//private Map<String, Integer> soldOutItemQuantityPair;
+	//private Map<String, Integer> totalSaleHappenedPerDay;
+	private static Inventory inventory;
+	
+	private Inventory()
+	{
+		//Get the details from DB. 
+		availableItemQuantityPair = new HashMap<Item, Integer>();
+		//totalSaleHappenedPerDay = new HashMap<String, Integer>();
+	}
+	
+	public static Inventory getInventoryInstance()
+	{
+		if(inventory == null)
+		{
+			inventory = new Inventory();
+		}
+		return inventory; 
+	}
+	
+	public Map<String,Integer> getAvailableItemQuantityPair()
+	{
+		return this.availableItemQuantityPair;
+	}
+	
+}
+
+

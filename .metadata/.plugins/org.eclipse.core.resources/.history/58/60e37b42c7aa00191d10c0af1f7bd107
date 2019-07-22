@@ -1,0 +1,22 @@
+package org.grocery.inventory.items.item;
+
+import org.grocery.inventory.items.itemtype.ItemType;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Item {
+
+	int id;
+	String name; 
+	double mrp; 
+	ItemType type;
+	//TODO: Tax tax; 
+	
+	Item(name, mrp, name)
+	{
+		
+	}
+	
+}

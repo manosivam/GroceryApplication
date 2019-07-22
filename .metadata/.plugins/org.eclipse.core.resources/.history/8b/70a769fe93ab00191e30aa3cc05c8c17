@@ -1,0 +1,39 @@
+package in.grocery.payments;
+
+import java.util.Random;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class CashPayment extends Payment{
+
+	double amountPaid;
+	
+	public CashPayment(double amountPaid) {
+		super(PaymentMethod.Cash);
+		this.amountPaid = amountPaid;
+	}
+
+	public double getAmountPaid()
+	{
+		return this.amountPaid;
+	}
+
+	@Override
+	public Transaction processPayment(double billAmount) {
+		Transaction transactionOutput = new Transaction(String.valueOf(new Random().nextLong()));
+		
+		if(amountPaid>=billAmount)
+		{
+			transactionOutput.setTransactionStatus(false);
+		}
+		else 
+		{
+			transactionOutput.setPayBackAmount(amountPaid - billAmount);
+			transactionOutput.setTransactionStatus(false);
+		}
+		return transactionOutput;
+	}
+	
+}

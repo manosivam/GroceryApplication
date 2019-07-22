@@ -1,0 +1,14 @@
+package in.grocery.registers;
+
+import in.grocery.Cart;
+import in.grocery.customers.Card;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface IRegisterHandler {
+
+	public boolean acceptOrderAndProcessPayment(Cart cart, Card card, String pin, boolean applyDiscount) throws InterruptedException;
+	
+}

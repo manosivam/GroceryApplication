@@ -1,0 +1,10 @@
+package in.grocery.payments;
+
+/**
+ * @author Manosivam
+ *
+ */
+enum PaymentMethods {
+	Cash,
+	Card
+}

@@ -1,0 +1,9 @@
+package org.grocery;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemQuantityPair {
+
+}

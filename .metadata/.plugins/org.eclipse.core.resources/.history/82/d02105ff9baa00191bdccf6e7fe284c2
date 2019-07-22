@@ -1,0 +1,11 @@
+package org.grocery.security;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Authenticator implements ICredentialsManager{
+
+	
+	
+}

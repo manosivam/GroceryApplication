@@ -1,0 +1,14 @@
+package LogManager;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Logger {
+
+	void println(String message)
+	{
+		System.out.println();
+	}
+	
+}

@@ -1,0 +1,69 @@
+package in.grocery.Drivers;
+
+import java.util.Scanner;
+
+import in.grocery.customers.utils.CustomerManager;
+import in.grocery.logs.Logger;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class InputReader {
+
+	private static InputReader inputReader;
+	private Scanner inputScanner;	
+	Logger logger;
+	
+	private InputReader()
+	{
+		logger = Logger.getInstance();
+		inputScanner = new Scanner(System.in);
+	}
+	
+	public static InputReader getInstance()
+	{
+		if(inputReader == null)
+		{
+			inputReader = new InputReader();
+		}
+		return inputReader;
+	}
+	
+	public String readCustomerNameOrInputToStopTheApplication()
+	{
+		logger.logMessage("Showing registed customers.");
+		CustomerManager.getInstance().printRegisteredCustomers();
+		logger.logMessage("-----------------------------------------------------");
+		logger.logMessage("waiting for a customer to enter. Please enter the customer name from the above list.."
+				+ "\nType stop to exit the application and print the total sale happened today");
+		logger.logMessage("-----------------------------------------------------");
+		String customerNameOrInputToStopTheApplication = "";
+		if(inputScanner.hasNextLine())//to read customer name. 
+		{
+			customerNameOrInputToStopTheApplication = inputScanner.nextLine();
+		}
+		return customerNameOrInputToStopTheApplication;
+	}
+	
+	public String readItemIdToLoadTheCartOrInputToPlaceTheOrder()
+	{	
+		String itemIdToLoadTheCartOrInputToPlaceTheOrder = "";
+		if(inputScanner.hasNextLine()) // to read items Id.
+		{
+			itemIdToLoadTheCartOrInputToPlaceTheOrder = inputScanner.nextLine();
+		}
+		return itemIdToLoadTheCartOrInputToPlaceTheOrder;
+	}
+	
+	public String readALine()
+	{
+		String input = "";
+		if(inputScanner.hasNextLine())
+		{
+			input = inputScanner.nextLine();
+		}	
+		return input;
+	}
+	
+}

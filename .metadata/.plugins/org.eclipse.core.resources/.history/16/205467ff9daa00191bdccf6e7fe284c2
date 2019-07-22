@@ -1,0 +1,14 @@
+package org.grocery.customer;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Employee extends Customer{
+
+	private int employee_id; 
+	private Credentials credentials;
+	
+	
+	
+}

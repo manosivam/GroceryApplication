@@ -1,0 +1,22 @@
+package in.grocery.payments.transactions;
+
+import in.grocery.payments.PaymentMethod;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class CashTransaction extends Transaction{
+
+	private double payBackAmount;
+	
+	public CashTransaction() {
+		this.payBackAmount = 0.0;
+		this.paymentMethod = PaymentMethod.Cash;
+	}
+	
+	public double getPayBackAmount()
+	{
+		return this.payBackAmount;
+	}
+}

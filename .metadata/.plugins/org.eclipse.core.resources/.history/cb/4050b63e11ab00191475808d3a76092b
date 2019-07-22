@@ -1,0 +1,28 @@
+package in.grocery.discounts.utils;
+
+import in.grocery.backend.BackendLayer;
+import in.grocery.customers.CustomerType;
+import in.grocery.inventory.items.itemtypes.ItemType;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class DiscountManager implements IDiscountManager{
+
+	
+	/**
+	 *  @return denotes discounts in percentage. For convenience, I am considering it as int, rather than double.  
+	 */
+	@Override
+	public int getDiscount(CustomerType type) {
+		
+		return BackendLayer.getDiscountForCustomerType(type);
+	}
+
+	@Override
+	public double getDiscount(String itemTypeName, String itemName) {
+		return BackendLayer.getDiscountForItemTypeOrItem(itemTypeName, itemName);
+	}
+	
+}

@@ -1,0 +1,16 @@
+package in.grocery.registers;
+
+import in.grocery.customers.Customer;
+import in.grocery.customers.CustomerType;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface IRegisterHandler {
+
+	public double getCustomerBasedDiscountPercent(CustomerType type);
+	public void releaseRegisterIntoCommonPool(Register register);
+	public Register getAvailableRegisterInstance();
+	
+}

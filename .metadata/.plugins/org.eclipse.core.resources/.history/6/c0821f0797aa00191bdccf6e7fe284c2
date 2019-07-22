@@ -1,0 +1,31 @@
+package LogManager;
+
+/**
+ * @author Manosivam
+ * singleton class
+ */
+public class Logger {
+
+	private Logger logger = null;
+	
+	/**
+	 * For an application instance, one logger is good enough. 
+	 * Hence having a Singleton class
+	 */
+	private Logger() {}
+	
+	public Logger getLogger()
+	{
+		if(logger == null)
+		{
+			logger = new Logger();
+		}
+		return logger;
+	}
+	
+	void println(String message)
+	{
+		System.out.println();
+	}
+	
+}

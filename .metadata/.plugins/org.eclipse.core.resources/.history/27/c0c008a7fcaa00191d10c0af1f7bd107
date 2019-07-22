@@ -1,0 +1,38 @@
+package in.grocery.payments;
+
+import java.util.Random;
+
+import in.grocery.customers.Card;
+
+/**
+ * @author Manosivam
+ *
+ */
+
+//Payment is a standalone unit. It don't need to know about Customer or card. 
+public class PaymentProcessor implements IPaymentProcessor{
+
+	@Override
+	public Transaction processPayment(double billAmount, double cashPaid) {
+		Transaction response = new Transaction();
+		if(billAmount > cashPaid)
+		{
+			response.setTransactionStatus(false);
+		}
+		else 
+		{
+			response.setPayBackAmount(cashPaid - billAmount);
+			response.setTransactionStatus(false);
+			response.setTrasactionNumber(String.valueOf(new Random().nextLong());
+		}
+		return response;
+	}
+
+	@Override
+	public PaymentResponse processPayment(double billAmount, Card cardDetail, String pin) {
+		
+		return false;
+	}
+
+	
+}

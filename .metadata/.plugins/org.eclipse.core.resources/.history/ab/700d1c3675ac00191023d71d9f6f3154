@@ -1,0 +1,19 @@
+package in.grocery.customers;
+
+import in.grocery.backend.BackendLayer;
+import in.grocery.logs.Logger;
+
+/**
+ * @author Manosivam
+ * purpose : this can be used to create customers in DB and get appropriate customer Instance 
+ */
+public class CustomerHandler {
+	//TODO: do we need interface for this?? 
+	// this is not exposed to client or as any other third party api. only customerManager will be exposed.
+	
+	public Customer createNewCustomerInDB(String name, int age, String accountName, String accountPassword) throws CustomerException
+	{
+		
+	}
+	
+}

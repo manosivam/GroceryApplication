@@ -1,0 +1,9 @@
+package org.grocery.customer;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface ICustomerManager {
+
+}

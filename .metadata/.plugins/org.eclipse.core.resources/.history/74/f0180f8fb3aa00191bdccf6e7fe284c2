@@ -1,0 +1,26 @@
+package org.grocery.customer;
+
+import org.grocery.security.Credentials;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Employee extends Customer{
+
+	private int employee_id; 
+	private Credentials credentials;
+	
+	public Employee(String name, int age, String accountName, String accountPassword) throws CustomerException
+	{
+		super(name,age);
+		if(accountName== null || accountPassword == null)
+		{
+			throw new CustomerException("Employee account name or password is/are missing");
+		}
+		this.type = CustomerType.EMPLOYEE;
+		this.credentials = new Credentials(accountName, accountPassword);
+	}
+	
+	
+}

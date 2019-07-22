@@ -1,0 +1,15 @@
+package in.grocery.automation;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Snippet {
+	/**
+	 * 
+	 */
+	public static void main(String[] args) {
+		new InventoryManager().updateSoldItemsDetails(customer.getCart().getItemCounts());
+	}
+}
+

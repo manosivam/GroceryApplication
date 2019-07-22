@@ -1,0 +1,14 @@
+package in.grocery.security;
+
+/**
+ * package access Interface. 
+ * Can be used to authenticate Employee when they are applying for employee discount. 
+ * @author Manosivam
+ *
+ */
+//making it package specific. (default modifier)
+interface IAuthenticator {
+
+	boolean authenticateCredential(Credentials credentials);
+	boolean changePassword(int emp_id, String oldPassword, String newPassword);
+}

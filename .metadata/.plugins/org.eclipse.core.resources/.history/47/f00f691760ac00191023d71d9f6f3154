@@ -1,0 +1,45 @@
+package in.grocery.automation;
+
+import java.util.Scanner;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class InputReader {
+
+	private static InputReader inputReader;
+	Scanner inputScanner;
+	
+	private InputReader()
+	{
+		inputScanner = new Scanner(System.in);
+	}
+	
+	public static InputReader getInputReaderInstance()
+	{
+		if(inputReader == null)
+		{
+			inputReader = new InputReader();
+		}
+		return inputReader;
+	}
+	
+	public String readCustomerName()
+	{
+		logger.logMessage("waiting for a customer to enter. Please enter the customer name..."
+				+ "\nType stop to exit the application and print the total sale happened today");
+		logger.logMessage("-----------------------------------------------------");
+		String customerName = "";
+		if(inputReader.hasNextLine())//to read customer name. 
+		{
+			customerName = inputReader.nextLine();
+			if(customerName.equalsIgnoreCase("stop"))
+			{
+				logger.logMessage("------Stopping application and printing total sale happened today----");
+				break;
+			}				
+		}
+	}
+	
+}

@@ -1,0 +1,9 @@
+package org.grocery.items.itemtypes;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemTypeException {
+
+}

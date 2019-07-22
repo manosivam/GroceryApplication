@@ -1,0 +1,11 @@
+package org.grocery;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemQuantityPair {
+
+	Map<String, Integer> itemQuantityPair = new HashMap<String,Integer>();
+	
+}

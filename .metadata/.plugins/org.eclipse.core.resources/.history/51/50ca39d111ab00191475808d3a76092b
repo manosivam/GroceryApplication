@@ -1,0 +1,27 @@
+package in.grocery.customers;
+
+import in.grocery.discounts.utils.DiscountManager;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class RegularCustomer extends Customer{
+
+	/**
+	 * @param name
+	 * @throws CustomerException 
+	 */
+	public RegularCustomer(String name, int age) throws CustomerException {
+		super(name,age);
+		this.type = CustomerType.REGULAR;
+		this.discount = getDiscount();
+	}
+	
+	@Override
+	public double getDiscount() {
+		return new DiscountManager().getDiscount(this.type);
+	}
+	//If RegularCustomer wants to have a discount, DiscountManager will take care of that. 
+	
+}

@@ -1,0 +1,290 @@
+package in.grocery.backend;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import in.grocery.customers.Customer;
+import in.grocery.customers.CustomerException;
+import in.grocery.customers.CustomerType;
+import in.grocery.customers.Employee;
+import in.grocery.customers.RegularCustomer;
+import in.grocery.customers.SeniorCitizen;
+import in.grocery.inventory.Item;
+import in.grocery.inventory.ItemException;
+import in.grocery.inventory.ItemType;
+import in.grocery.inventory.ItemTypeException;
+import in.grocery.logs.Logger;
+
+/**
+ * singleton class.
+ * 
+ * @author Manosivam
+ *
+ */
+public class DB {
+	
+	private Logger logger;
+	private static DB db;
+	
+	private DB() {
+		logger = Logger.getInstance();
+	}
+	
+	public static DB getInstance()
+	{
+		if(db == null)
+		{
+			db = new DB();
+		}
+		return db;
+	}
+	
+	private Map<String,Customer> nameCustomerMap = new LinkedHashMap<String, Customer>();
+	private Map<CustomerType,Double> customerDiscountMap = new HashMap<CustomerType, Double>();
+	
+	private Map<Item, Integer> itemsAvailableInInventory = new LinkedHashMap<Item,Integer>();
+	public Map<Integer, Item> itemIdItemMap = new HashMap<Integer, Item>();
+	
+	private ArrayList<ItemType> itemTypesAvailableInIntentory = new ArrayList<ItemType>();
+	public Map<String,Double> taxItemTypePercentMap = new HashMap<String,Double>();
+	
+	private Map<String,Double> earningsPerDaySoFarMap = new HashMap<String, Double>();
+	
+	public void initializeTaxItemTypeMap() 
+	{
+		//ref: https://www.kotak.com/en/stories-in-focus/gst-rate-slabs.html
+		//Assuming DB will have all the type - tax map in it.  
+		taxItemTypePercentMap.put("chips", 5.0);
+		taxItemTypePercentMap.put("fruit juices", 12.0);
+		taxItemTypePercentMap.put("ice cream", 18.0);
+		taxItemTypePercentMap.put("tooth powder",12.0);
+		//.... and so on. 
+	}
+	
+	public void addFewCustomers()
+	{
+		customerDiscountMap.put(CustomerType.REGULAR,0.0);
+		customerDiscountMap.put(CustomerType.SENIOR_CITIZEN,5.0);
+		customerDiscountMap.put(CustomerType.EMPLOYEE,10.0);
+		
+		int customerId = 1; 
+		Customer customerToAdd; 
+		
+		try {
+			
+			customerToAdd = new SeniorCitizen("Siva", 61);
+			customerToAdd.setId(customerId++);
+			nameCustomerMap.put(customerToAdd.getName().toLowerCase(), customerToAdd);
+			
+			customerToAdd = new SeniorCitizen("Somnath", 63);
+			customerToAdd.setId(customerId++);
+			nameCustomerMap.put(customerToAdd.getName().toLowerCase(), customerToAdd);
+			
+			customerToAdd = new Employee("Karthik", 31,"karthik","1234567");
+			customerToAdd.setId(customerId++);
+			nameCustomerMap.put(customerToAdd.getName().toLowerCase(),customerToAdd);
+			
+			customerToAdd = new RegularCustomer("Mano", 26);
+			customerToAdd.setId(customerId++);
+			nameCustomerMap.put(customerToAdd.getName().toLowerCase(), customerToAdd);
+			
+			customerToAdd = new RegularCustomer("Divakar", 28);
+			customerToAdd.setId(customerId++);
+			nameCustomerMap.put(customerToAdd.getName().toLowerCase(), customerToAdd);
+			
+		}catch (CustomerException e) {
+			logger.logMessage("exception while initializing customers in DB." + e.getMessage());
+		}
+	}
+	
+	public void addFewItemTypes()
+	{
+		try {
+			itemTypesAvailableInIntentory.add(new ItemType("chips"));// 5%
+			itemTypesAvailableInIntentory.add(new ItemType("fruit juices")); // 12%
+			itemTypesAvailableInIntentory.add(new ItemType("ice cream")); // 18%
+			initializeTaxItemTypeMap();
+		} catch (ItemTypeException e) {
+			logger.logMessage("exception while initializing Item types in DB." + e.getMessage());
+		}  
+	}
+	
+	public void addFewItems()
+	{
+		int itemId = 1;
+		Item item;
+		try {
+			item = new Item("arun ice creams-cassatta slice", 80.0, "ice cream");
+			item.setId(itemId);
+			itemsAvailableInInventory.put(item, 10);			
+			itemIdItemMap.put(itemId++,item);
+			
+			item = new Item("Lay's Classic", 15, "chips");
+			item.setId(itemId);
+			itemsAvailableInInventory.put(item, 10);
+			itemIdItemMap.put(itemId++,item);
+			
+			item = new Item("Lay's American Style Cream & Onion Flavour", 15, "chips");
+			item.setId(itemId);
+			itemsAvailableInInventory.put(item, 10);
+			itemIdItemMap.put(itemId++,item);
+			
+			item = new Item("arun ice creams-Butterscotch", 80.0, "ice cream");
+			item.setId(itemId);
+			itemsAvailableInInventory.put(item, 10);
+			itemIdItemMap.put(itemId++,item);
+			
+			item = new Item("Amul Pomegranate juice", 60, "fruit juices");
+			item.setId(itemId);
+			itemsAvailableInInventory.put(item, 10);
+			itemIdItemMap.put(itemId++,item);
+			
+			item = new Item("Mango milkshake", 50, "fruit juices");
+			item.setId(itemId);
+			itemsAvailableInInventory.put(item, 10);
+			itemIdItemMap.put(itemId,item);
+			
+		} catch (ItemTypeException | ItemException e) {
+			logger.logMessage("exception while initializing Items in DB..." + e.getMessage());
+		}
+	}
+	
+	public double getDiscountPercentForCustomerTypeFromDB(CustomerType type)
+	{
+		return customerDiscountMap.get(type);
+	}
+
+	public double getTaxPercentForItemTypeFromDB(String itemTypeName) throws ItemTypeException {
+		//Run a query and find the corresponding tax for the given item type. 
+		if(taxItemTypePercentMap.containsKey(itemTypeName))
+		{
+			return taxItemTypePercentMap.get(itemTypeName);
+		}
+		throw new ItemTypeException("Invalid type");
+	}
+
+	/**
+	 * @param name
+	 * @return
+	 */
+	public double getDiscountForItemTypeOrItem(String itemTypeName, String itemName) {
+		//Query the DB and get the discount percent. 
+		//for chips, I am hard-coding the discount to be 30%. 
+		if(itemTypeName.equalsIgnoreCase("chips"))
+		{
+			return 30.0;
+		}
+		//Assuming that the discount can be obtained either from item type or by item.
+		if(itemName.equalsIgnoreCase("arun ice creams-cassatta slice"))
+		{
+			return 10.0;
+		}
+		return 0;
+	}
+
+	/**
+	 * @param name
+	 * @throws CustomerException 
+	 */
+	public Customer getCustomerDetailsFromDB(String name) {
+		
+		if(nameCustomerMap.containsKey(name.toLowerCase()))
+		{
+			return nameCustomerMap.get(name.toLowerCase());
+		}
+		return null;
+	}
+
+	/**
+	 * @param itemQuantityPair
+	 * @return
+	 */
+	public boolean updateSoldItemsDetails(Map<Item, Integer> itemQuantityPair) {
+		if(itemQuantityPair!=null && itemQuantityPair.size()>0)
+		{
+			for(Map.Entry<Item, Integer> entry: itemQuantityPair.entrySet())
+			{
+				if(itemsAvailableInInventory.containsKey(entry.getKey()))
+				{
+					int availableCount = itemsAvailableInInventory.get(entry.getKey());
+					availableCount -=entry.getValue();
+					itemsAvailableInInventory.put(entry.getKey(),availableCount);
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @param date
+	 * @param costToCompany
+	 */
+	public void updateSalesPriceForTheDay(String date, double costToCompany) {
+		if(earningsPerDaySoFarMap.containsKey(date))
+		{
+			double previousEarnings = earningsPerDaySoFarMap.get(date);
+			earningsPerDaySoFarMap.put(date, previousEarnings+costToCompany);
+		}
+		else
+		{
+			earningsPerDaySoFarMap.put(date, costToCompany);
+		}
+	}
+
+	/**
+	 * @param dateString
+	 * @return 
+	 */
+	public double getTotalSaleHappenedForTheDayFromDB(String dateString) {
+		if(earningsPerDaySoFarMap.containsKey(dateString))
+		{
+			return earningsPerDaySoFarMap.get(dateString);
+		}
+		return 0;
+	}
+
+	public boolean isItemAvailableForTheGivenQuantityInStock(Item item, int quantity) {
+		return itemsAvailableInInventory.containsKey(item) && (itemsAvailableInInventory.get(item) - quantity >=0);
+	}
+
+	/**
+	 * @param item id
+	 * @throws ItemException 
+	 */
+	public Item getItemFromId(int id) {
+		if(itemIdItemMap.containsKey(id))
+		{
+			return itemIdItemMap.get(id);
+		}
+		return null;
+	}
+
+	public Map<String, Customer> getRegisteredCustomers() {
+		return nameCustomerMap;
+	}
+
+	public Map<Item, Integer> getAvailableItemsQuantityPair() {
+		return itemsAvailableInInventory;
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public ItemType getItemTypeFromId(int id) {
+		ArrayList<ItemType> availableItemTypes = itemTypesAvailableInIntentory;
+		for(ItemType itemType : availableItemTypes)
+		{
+			if(itemType.getId() == id)
+			{
+				return itemType;
+			}
+		}
+		logger.logMessage("Could not find item type for id:["+id+"].");
+		return null;//we can throw ItemTypeNotFoundException.
+	}
+	
+}

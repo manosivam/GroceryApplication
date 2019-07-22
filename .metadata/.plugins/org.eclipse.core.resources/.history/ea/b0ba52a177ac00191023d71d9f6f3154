@@ -1,0 +1,204 @@
+package in.grocery.Drivers;
+
+import java.text.DecimalFormat;
+
+import in.grocery.Cart;
+import in.grocery.InventoryManager;
+import in.grocery.backend.DBLayer;
+import in.grocery.customers.Customer;
+import in.grocery.customers.CustomerType;
+import in.grocery.customers.Employee;
+import in.grocery.customers.SeniorCitizen;
+import in.grocery.inventory.items.ItemException;
+import in.grocery.inventory.items.ItemHandler;
+import in.grocery.logs.Logger;
+import in.grocery.payments.transactions.Transaction;
+import in.grocery.registers.Register;
+import in.grocery.utils.DateUtil;
+import in.grocery.utils.Utils;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class DriverUtils {
+
+	private static DriverUtils automationUtils;
+	private Logger logger;
+	
+	private DriverUtils() {
+		logger  = Logger.getInstance();
+	}
+	
+	public static DriverUtils getInstance()
+	{
+		if(automationUtils == null)
+		{
+			automationUtils = new DriverUtils();
+		}
+		return automationUtils;
+	}
+
+	private void printRemainingItemInInventory()
+	{
+		logger.logMessage("---------------------------------------------------------");
+		InventoryManager.getInstance().printRemainingItemInInventory();		
+		logger.logMessage("-----------------------------------------------------");
+	}
+
+	public void displayItemsInInventoryToCustomer() {
+		logger.logMessage("Showing available Items in the inventory to the customer...");
+		printRemainingItemInInventory();
+	}
+	
+	public void displayRemainingItemInInventory()
+	{
+		logger.logMessage("Showing Remaining Items in the inventory....");
+		printRemainingItemInInventory();
+	}
+
+	public void printTotalSaleforToday() {
+		logger.logMessage("Total sale happened today:[" +InventoryManager.getInstance().getTotalSaleHappened(DateUtil.getCurrentDate())+"]");
+	}
+
+	public Transaction readPaymentInputFromCustomerAndInitiateTransaction(Register register, double billAmount, Customer customer) {
+		
+		logger.logMessage("How do you want to pay the bill? Cash or card?"
+				+ "\nType cash<space>amount that you are paying OR "
+				+ "\ncard<space>card number<space>pin to pay");
+		
+		String cashFromCustomer= null, cardNumber = null, pin = null;
+		Transaction transaction;
+		
+		for(;;)
+		{
+			String paymentInputFromCustomer = InputReader.getInstance().readALine();
+			
+			if(paymentInputFromCustomer.startsWith("cash "))
+			{
+				cashFromCustomer = paymentInputFromCustomer.split(" ")[1];
+				break;
+			}
+			else if(paymentInputFromCustomer.startsWith("card ")) 
+			{
+				String splitedString[] = paymentInputFromCustomer.split(" ");
+				cardNumber = splitedString[1];
+				pin = splitedString[2];
+				break;
+			}
+			else
+			{
+				logger.logMessage("Sorry, Please enter valid input in the mentioned format.");
+				continue;
+			}
+		}
+		if(cashFromCustomer!=null)
+		{
+			transaction= register.acceptPaymentAndProcessTheOrderForCustomer(billAmount,Double.parseDouble(cashFromCustomer), customer);
+		}
+		else 
+		{
+			transaction = register.acceptPaymentAndProcessTheOrderForCustomer(billAmount, cardNumber, pin, customer);
+		}
+		return transaction;
+	}
+
+	/**
+	 * @param transaction
+	 */
+	public void verifyTransactionStatus(Transaction transaction) {
+		if(transaction!=null && transaction.isTransactionSuccessful())
+		{
+			if(transaction.getPayBackAmountIfAny()>0)
+				logger.logMessage("Please take the change of \""+Utils.roundOffMoney(transaction.getPayBackAmountIfAny())+"\" rupees.");
+		}
+		else 
+		{
+			logger.logMessage("Transaction unsuccessful. please enter valid payment details.");
+		}
+	}
+
+	/**
+	 * @param register 
+	 * @param customerType 
+	 * @return
+	 */
+	public double applyDiscountsByDefaultAndGetFinalBillAmount(Cart cart, CustomerType customerType, double customerBasedDiscount,  Register register) {
+		
+		double billAmount = 0.0;
+		
+		boolean applyDiscountsOnCustomerType = (customerType == CustomerType.SENIOR_CITIZEN || customerType== CustomerType.EMPLOYEE);
+		boolean applyDisccountsOnItemOrItemType = true;
+		
+		if(customerType == CustomerType.SENIOR_CITIZEN)
+		{
+			logger.logMessage("Applying Senior citizen discount percent of " + customerBasedDiscount);
+		}
+		else if(customerType== CustomerType.EMPLOYEE)
+		{
+			logger.logMessage("Applying Employee discount percent of " + customerBasedDiscount);
+		}
+		else 
+		{
+			logger.logMessage("Applying Item/Item type based discount percent if any.");
+		}
+		
+		billAmount = register.applyDiscountAndGetFinalPriceToPay(cart, customerBasedDiscount, applyDiscountsOnCustomerType, applyDisccountsOnItemOrItemType);
+		double amountSaved= cart.getCartValue() - billAmount;
+		
+		logger.logMessage("Bill amount is: "+ billAmount);
+		if(cart.getCartValue() > billAmount)
+		{
+			logger.logMessage("Congratulation, You have saved ["+Utils.roundOffMoney(amountSaved)+"] in this purchase");
+		}
+		return billAmount;
+	}
+
+	/**
+	 * @param cart
+	 */
+	public void readItemsAsInputAndLoadCart(Cart cart) {
+		
+		logger.logMessage("Please load the cart by typing in item Id.. Refer the above item list. "
+				+ "\nNote: Items can be loaded one by one. "
+				+ "If multiple items are needed, please load the same item for the required quantity by repeating the Item Id. "
+				+ "Thank you for your understanding. "
+				+ "\nType done to place the order.");
+		
+		for(;;)
+		{
+			String itemIdToLoadTheCartOrInputToPlaceTheOrder = InputReader.getInstance().readItemIdToLoadTheCartOrInputToPlaceTheOrder();
+			if(itemIdToLoadTheCartOrInputToPlaceTheOrder.equalsIgnoreCase("done"))
+			{
+				break;
+			}
+			try {
+				cart.loadItem(ItemHandler.getInstance().getItemFromId(Integer.parseInt(itemIdToLoadTheCartOrInputToPlaceTheOrder)));
+			} catch (ItemException | NumberFormatException e) {
+				logger.logMessage("Invalid item. Please try loading from the available item list..");
+			}
+		}
+	}
+	
+	public static void bootstrapApplication()
+	{
+		Logger logger  = Logger.getInstance();
+		logger.logMessage("Bootstrapping Grocery application...");
+		logger.logMessage("---------------------------------------------------");
+		
+		logger.logMessage("adding few item types...");
+		DBLayer.addFewItemTypes();
+		logger.logMessage("Item types added.");
+		logger.logMessage("---------------------------------------------------");
+		
+		logger.logMessage("adding few items to inventory...");
+		DBLayer.addFewItems();
+		logger.logMessage("Items added to inventory");
+		logger.logMessage("---------------------------------------------------");
+		
+		logger.logMessage("adding few customers...");
+		DBLayer.addFewCustomers();
+		logger.logMessage("customers added");
+		logger.logMessage("---------------------------------------------------");
+	}
+}

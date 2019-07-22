@@ -1,0 +1,26 @@
+package in.grocery.Billing;
+
+import in.grocery.customers.Customer;
+import in.grocery.payments.Transaction;
+import in.grocery.registers.Register;
+import in.grocery.utils.DateUtil;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class BillGenerator implements IBillGenerator{
+
+	@Override
+	public Bill generateBill(Customer customer, Transaction transaction, Register registerId) {
+
+		//TODO: handle null cases. Because BillGenerator can be tested separately. 
+		return new Bill(customer.getCart().getItemCounts(),
+				transaction.getTrasactionNumber(), 
+				transaction.getPaymentMethod().toString(),
+				customer.getName(),
+				registerId,
+				DateUtil.getCurrentDate());
+	}
+
+}

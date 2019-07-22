@@ -1,0 +1,32 @@
+package in.grocery.payments;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Transaction {
+
+	private boolean success;
+	private double payBackAmount;
+	private String transactionNumber;
+	
+	public PaymentResponse()
+	{
+		success = false; 
+		payBackAmountIfAny = 0;
+		transactionNumber = "";
+	}
+	
+	public boolean isPaymentSuccessful()
+	{
+		return this.success;
+	}
+	
+	public double getPayBackAmountIfAny()
+	{
+		return this.payBackAmount;
+	}
+	
+	public String getTrasactionNumber 
+	
+}

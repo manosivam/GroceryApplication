@@ -1,0 +1,18 @@
+package org.grocery.customer;
+
+import LogManager.Logger;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class CustomerException extends Exception{
+	
+	Logger logger = Logger.getInstance();
+	
+	CustomerException(String errorMessage){
+		super(errorMessage);
+		
+	}
+	
+}

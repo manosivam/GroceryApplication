@@ -1,0 +1,19 @@
+package in.grocery.payments;
+
+/**
+ * @author Manosivam
+ *
+ */
+//keeping it abstract to prevent instance creation. 
+public abstract class Payment {
+
+	PaymentMethod paymentMethod;
+	
+	public Payment(PaymentMethod method)
+	{
+		this.paymentMethod = method;
+	}
+	
+	public abstract Transaction processPayment(double billAmount, double cashPaid);
+	
+}

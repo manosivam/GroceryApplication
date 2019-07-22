@@ -1,0 +1,108 @@
+package in.grocery.registers;
+
+import in.grocery.Cart;
+import in.grocery.InventoryManager;
+import in.grocery.Billing.Bill;
+import in.grocery.Billing.BillGenerator;
+import in.grocery.customers.Customer;
+import in.grocery.logs.Logger;
+import in.grocery.payments.PaymentProcessor;
+import in.grocery.payments.transactions.Transaction;
+import in.grocery.utils.DateUtil;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Register {
+
+	Logger logger = Logger.getInstance();
+	
+	int registerId; 
+	PaymentProcessor paymentProcessor;
+	
+	public Register(int registerId){
+		this.registerId = registerId;
+		this.paymentProcessor = new PaymentProcessor();
+	}
+	
+	public int getRegisterId()
+	{
+		return this.registerId;
+	}
+
+	public double applyDiscountAndGetFinalPriceToPay(Customer customer, boolean applyDiscountsOnCustomerType, 
+		boolean applyDisccountsOnItemOrItemType) {
+	
+		double amountToPay = 0;
+		Cart cart = customer.getCart();
+		if(applyDiscountsOnCustomerType)
+		{
+			amountToPay = cart.getCartValue() - (cart.getCartValue() * customer.getDiscountPercent()/100);
+		}
+		else if(applyDisccountsOnItemOrItemType)
+		{
+			amountToPay = customer.getCart().recomputeCartValueAfterApplyingDiscounts();
+		}
+		else 
+		{
+			amountToPay = customer.getCart().getCartValue();
+		}
+		return amountToPay;
+	}
+	
+	/**
+	 * @param cart
+	 * @param card
+	 * @param pin
+	 * @param applyDiscount
+	 * @return 
+	 */
+	public Transaction acceptOrderAndProcessPayment(double billAmount, String cardNumber, String pin, Customer purchaseAndCustomerDetailsForBillingAndInventory)
+	{	
+		Transaction transaction = this.paymentProcessor.processPayment(billAmount, cardNumber, pin);
+		
+		if(transaction.isTransactionSuccessful())
+		{
+			logger.logMessage("Transaction is successful. Generating bill.. please wait..");
+			generateBillAndNotifyCustomer(purchaseAndCustomerDetailsForBillingAndInventory, transaction);
+			//update the inventory and print it.
+			logger.logMessage("Updating Inventory items...");
+			new InventoryManager().updateSoldItemsDetails(purchaseAndCustomerDetailsForBillingAndInventory.getCart().getItemCounts());
+		}
+		return transaction;
+	}
+
+	//TODO: Remove customer and have exact values.
+	public Transaction acceptMoneyAndProcessTheOrderForCustomer(double billAmount, double cashPaid, Customer purchaseAndCustomerDetailsForBillingAndInventory) {
+		
+		Transaction transaction = this.paymentProcessor.processPayment(billAmount, cashPaid);
+		if(transaction.isTransactionSuccessful())
+		{
+			logger.logMessage("transaction is successfull.");
+			generateBillAndNotifyCustomer(purchaseAndCustomerDetailsForBillingAndInventory, transaction);
+			//update the inventory and print it after giving payBackAmount to customer.
+			logger.logMessage("Updating Inventory items...");
+			InventoryManager inventoryManager=new InventoryManager();
+			inventoryManager.updateSoldItemsDetails(purchaseAndCustomerDetailsForBillingAndInventory.getCart().getItemCounts());
+			inventoryManager.updateSalesPriceForTheDay(DateUtil.getCurrentDate(), billAmount);
+		}
+		return transaction;
+	}
+	
+	private Bill generateBillAndNotifyCustomer(Customer customer, Transaction transaction)
+	{
+		Bill generatedBill = new BillGenerator().generateBill(customer, transaction, this.registerId);
+		
+		//TODO: log the bill details in output.
+		
+		/*
+		2. print - new Printer().print(Bill bill) 
+		3. notify customer, if email is set in our DB 
+			new NotificationLayer().notifyAsync(Customer customer, Bill bill) 
+		*/
+		return generatedBill;
+	}
+	
+
+}

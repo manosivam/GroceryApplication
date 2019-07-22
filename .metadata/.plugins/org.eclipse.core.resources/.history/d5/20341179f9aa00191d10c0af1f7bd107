@@ -1,0 +1,9 @@
+package in.grocery.customers;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Card {
+
+}

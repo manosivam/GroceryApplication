@@ -1,0 +1,33 @@
+package org.grocery.inventory.items.itemtype;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemType {
+	int id; // id from DB. after item type creation in DB, 
+	String name; //item type name from client.  
+	
+	
+	protected ItemType(String name) throws ItemTypeException
+	{
+		if(name == null || name.trim().isEmpty())
+		{
+			String errorMessage = "empty or null item type.";
+			throw new ItemTypeException(errorMessage);
+		}
+		
+		this.name = name;
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+	
+}

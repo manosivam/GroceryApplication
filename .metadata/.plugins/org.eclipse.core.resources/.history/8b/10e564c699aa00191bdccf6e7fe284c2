@@ -1,0 +1,18 @@
+package org.grocery.customer;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class RegularCustomer extends Customer{
+
+	/**
+	 * @param name
+	 */
+	public RegularCustomer(String name, int age) {
+		super(name,age);
+		// TODO Auto-generated constructor stub
+	}
+
+	
+}

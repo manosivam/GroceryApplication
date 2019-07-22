@@ -1,0 +1,17 @@
+package in.grocery.payments;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface IPaymentProcessor {
+
+	public Transaction processPayment(double billAmount, double cashPaid);
+	
+	public Transaction processPayment(double billAmount, String cardNumber, String pin);
+	
+	//Returns the remaining amount paid back to the customer. 
+	//public Transaction processPayment(double billAmount, CashPayment cashPayment);
+	
+	//public Transaction processPayment(double billAmount, CardPayment cardPayment);
+}

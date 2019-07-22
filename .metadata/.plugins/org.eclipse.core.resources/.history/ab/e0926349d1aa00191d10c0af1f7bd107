@@ -1,0 +1,13 @@
+package org.grocery.taxes;
+
+import org.grocery.inventory.items.itemtypes.ItemType;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface ITaxFinder {
+
+	double getTaxBasedOnItemType(String type);
+	
+}

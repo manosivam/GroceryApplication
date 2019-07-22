@@ -1,0 +1,29 @@
+package in.grocery.customers;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Card {
+
+	private String cardNumber;
+	private String pin;
+	
+	public Card()
+	{
+		cardNumber = null;
+		pin = null;
+	}
+	
+	public Card(String cardNumber)
+	{
+		this.cardNumber = cardNumber;
+		this.pin = null;
+	}
+	
+	public setCardNumber(String cardNumber)
+	{
+		this.cardNumber = cardNumber;
+	}
+	
+}

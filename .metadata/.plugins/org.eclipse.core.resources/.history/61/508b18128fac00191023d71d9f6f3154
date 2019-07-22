@@ -1,0 +1,207 @@
+package in.grocery.backend;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import in.grocery.customers.Customer;
+import in.grocery.customers.CustomerException;
+import in.grocery.customers.CustomerType;
+import in.grocery.inventory.Item;
+import in.grocery.inventory.ItemException;
+import in.grocery.inventory.ItemType;
+import in.grocery.inventory.ItemTypeException;
+import in.grocery.registers.IRegister;
+import in.grocery.registers.Register;
+import in.grocery.security.Credentials;
+
+/**
+ * 
+ * <p>Backend can be anything - another service, cloud, or db.<p>
+ *  
+ *  @author Manosivam
+ */
+public class Backend {
+
+	int customerId = 1; 
+	int itemTypeId = 1;
+	int itemId = 1;
+	
+	static List<Register> availableRegisters = new LinkedList<Register>();
+	private static Backend backend;
+	private DB db;
+	
+	private Backend() {
+		db = DB.getInstance();
+	}
+	
+	public static Backend getInstance()
+	{
+		if(backend == null)
+		{
+			backend = new Backend();
+		}
+		return backend;
+	}
+	
+	static 
+	{
+		//Assuming there are five registers available initially. 
+		availableRegisters.add(new Register(1));
+		availableRegisters.add(new Register(2));
+		availableRegisters.add(new Register(3));
+		availableRegisters.add(new Register(4));
+		availableRegisters.add(new Register(5));
+	}
+	
+	/**
+	 * @param credentials to authenticate. 
+	 * Check the Backend- db or any other service and authenticate the user. For simplicity, I am returning true for valid inputs.
+	 */
+	public boolean authenticateCredential(Credentials credentials)
+	{
+		if(credentials.getUsername()!=null && credentials.getPassword()!=null)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * @param type to get discount
+	 * Check the backend, and get the discount from db.   
+	 * @return discount percent
+	 */
+	public double getDiscountPercentForCustomerType(CustomerType type) {
+		return db.getDiscountPercentForCustomerTypeFromdb(type);
+	}
+	
+	public double getDiscountPercentForItemTypeOrItem(String itemTypeName, String itemName) {
+		return db.getDiscountForItemTypeOrItem(itemTypeName, itemName);
+	}
+	
+	public double getTaxPercentForItemTypeString(String itemTypeName) throws ItemTypeException
+	{
+		return db.getTaxPercentForItemTypeFromdb(itemTypeName);
+	}
+	
+	public Customer createCustomerIndb(Customer serializedCustomer)
+	{
+		if(serializedCustomer!=null)
+		{
+			//call backend and create the customer. 
+			
+			//For simplicity, assuming this to be success and return newCustomer obtained from db. 
+			//I am skipping the deserialzation part. 
+			Customer responseStringFromdb = serializedCustomer;
+			
+			//now, convert the responsefromdb to object.  
+			Customer customerObjectFromdb = responseStringFromdb;
+			
+			return customerObjectFromdb;
+		}
+		else 
+		{
+			return null;
+		}
+	}
+	
+	public ItemType addItemTypeIndb(ItemType itemType)
+	{
+		if(itemType!=null)
+		{
+			ItemType itemTypeFromdb = itemType;  
+			
+			return itemTypeFromdb; 
+		}
+		return null;
+	}
+
+	public Map<Item,Integer> addNewItemAndQuantityIndb(Item item, int quantity)
+	{
+		if(item!=null && quantity >0)
+		{
+			Map<Item,Integer> itemQuantityMap = new HashMap<Item,Integer>();
+			itemQuantityMap.put(item,quantity);
+			return itemQuantityMap;
+		}
+		return null;
+	}
+
+	public Map<Item, Integer> getAvailableItemsQuantityPair() {
+		return db.getAvailableItemsQuantityPair();
+	}
+
+	public Customer getCustomerDetails(String name) {
+		return db.getCustomerDetailsFromdb(name);
+	}
+	
+	public IRegister getAvailableRegisterInstance()
+	{
+		int numberOfAvailableRegisters = availableRegisters.size();
+		if(numberOfAvailableRegisters>0)
+		{
+			IRegister availableRegister = availableRegisters.get(numberOfAvailableRegisters-1);
+			availableRegisters.remove(numberOfAvailableRegisters-1);
+			return availableRegister;
+		}
+		//if null customer has to wait for some more time and check for get AvailableRegister. 
+		return null;
+	}
+
+	public boolean updateSoldItemsDetails(Map<Item, Integer> itemsCount) {
+		return db.updateSoldItemsDetails(itemsCount);
+	}
+
+	public void  updateSalesPriceForTheDay(String date, double costToCompany) {
+		db.updateSalesPriceForTheDay(date,costToCompany);
+	}
+
+	/**
+	 * @param dateString
+	 * @return
+	 */
+	public double getTotalSaleHappened(String dateString) {
+		return db.getTotalSaleHappenedForTheDayFromdb(dateString);
+	}
+
+	/**
+	 * @param item
+	 * @param quantity 
+	 * @return
+	 */
+	public boolean isItemAvailableForTheGivenQuantityInStock(Item item, int quantity) {
+		return db.isItemAvailableForTheGivenQuantityInStock(item,quantity);
+	}
+
+	/**
+	 * @param register
+	 */
+	public void releaseRegisterIntoCommonPool(Register register) {
+		//LRU algothrim. 
+		availableRegisters.add(0, register);
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 * @throws ItemException 
+	 */
+	public Item getItemFromId(int id) throws ItemException {
+		return db.getItemFromId(id);
+	}
+	
+	public Map<String, Customer> getRegisteredCustomers() {
+		return db.getRegisteredCustomers();
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public ItemType getItemTypeFromId(int id) {
+		return db.getItemTypeFromId(id);
+	}
+	
+}

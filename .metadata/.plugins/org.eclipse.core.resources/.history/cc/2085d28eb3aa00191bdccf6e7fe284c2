@@ -1,0 +1,18 @@
+package org.grocery.customers.util;
+
+import org.grocery.customer.Customer;
+import org.grocery.customer.CustomerException;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface ICustomerManager {
+
+	public Customer createNewCustomer(String name, int age) throws CustomerException;
+	public Customer createNewCustomer(String name, int age, String accountName, String accountPassword) throws CustomerException;
+	
+	public Customer getCustomerFromBackEnd(String name);
+	
+	public boolean deleteEmployee(String name);
+}

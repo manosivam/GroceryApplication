@@ -1,0 +1,9 @@
+package org.grocery;
+
+/**
+ * @author mano
+ *
+ */
+public class CustomerType {
+
+}

@@ -1,0 +1,13 @@
+package in.grocery.taxes;
+
+import in.grocery.inventory.items.itemtypes.ItemTypeException;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface ITaxFinder {
+
+	double getTaxBasedOnItemType(String itemTypeName) throws ItemTypeException;
+	
+}

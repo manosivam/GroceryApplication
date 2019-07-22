@@ -1,0 +1,46 @@
+package org.grocery.inventory.items.itemtypes;
+
+import java.util.ArrayList;
+
+import org.grocery.backend.BackendLayer;
+import org.grocery.backend.DBLayer;
+import org.grocery.logs.Logger;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemTypeHandler {
+
+	Logger logger = Logger.getInstance();
+	
+	public ItemType addNewItemType(String name) throws ItemTypeException
+	{
+		ItemType type = new ItemType(name); 
+		
+		ItemType itemTypeFromDB = BackendLayer.addItemTypeInDB(type);
+		
+		return itemTypeFromDB;
+	}
+	
+	public ItemType getItemTypeFromId(int id)
+	{
+		ArrayList<ItemType> availableItemTypes = DBLayer.itemTypesAvailableInIntentory;
+		for(ItemType itemType : availableItemTypes)
+		{
+			if(itemType.getId() == id)
+			{
+				return itemType;
+			}
+		}
+		logger.logMessage("Could not find item type for id:["+id+"].");
+		return null;// we can throw ItemTypeNotFoundException. 
+	}
+	
+	public ItemType updateTaxForItemType(ItemType type, double newTax)
+	{
+		//DBLayer.updateTaxForItemTypeInDb(type, newTax);
+		return null;
+	}
+	
+}

@@ -1,0 +1,56 @@
+package in.grocery.payments.transactions;
+
+import in.grocery.payments.PaymentMethod;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Transaction {
+
+	private boolean status;
+	private String transactionNumber;
+	protected PaymentMethod paymentMethod;
+	
+	public Transaction()
+	{
+		status = false; 
+		transactionNumber = "";
+	}
+	
+	public Transaction(String transactionNumber)
+	{
+		this.transactionNumber = transactionNumber;
+		status = false; 
+	}
+	
+	public boolean isTransactionSuccessful()
+	{
+		return this.status;
+	}
+	
+	public String getTrasactionNumber()
+	{
+		return this.transactionNumber;
+	}
+	
+	public void setTransactionStatus(boolean status)
+	{
+		this.status = status;
+	}
+	
+	public void setTrasactionNumber(String transactionNumber)
+	{
+		this.transactionNumber = transactionNumber;
+	}
+	
+	public void setPaymentMethod(PaymentMethod paymentMethod)
+	{
+		this.paymentMethod = paymentMethod;
+	}
+	
+	public PaymentMethod getPaymentMethod()
+	{
+		return this.paymentMethod;
+	}
+}

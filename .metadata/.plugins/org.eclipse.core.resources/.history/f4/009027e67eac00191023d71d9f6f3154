@@ -1,0 +1,24 @@
+package in.grocery.registers;
+
+import in.grocery.customers.Cart;
+import in.grocery.customers.Customer;
+import in.grocery.payments.transactions.Transaction;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface IRegister {
+
+	int getRegisterId();
+
+	double applyDiscountAndGetFinalPriceToPay(Cart cart, double customerBasedDiscount,
+			boolean applyDiscountsOnCustomerType, boolean applyDisccountsOnItemOrItemType);
+
+	Transaction acceptPaymentAndProcessTheOrderForCustomer(double billAmount, String cardNumber, String pin,
+			Customer purchaseAndCustomerDetailsForBillingAndInventory);
+
+	Transaction acceptPaymentAndProcessTheOrderForCustomer(double billAmount, double cashPaid,
+			Customer purchaseAndCustomerDetailsForBillingAndInventory);
+
+}

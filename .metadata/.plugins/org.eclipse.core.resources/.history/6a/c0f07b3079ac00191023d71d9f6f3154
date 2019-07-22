@@ -1,0 +1,19 @@
+package in.grocery.Billing;
+
+import in.grocery.customers.Customer;
+import in.grocery.payments.transactions.Transaction;
+
+/**
+ * @author Manosivam
+ *
+ */
+interface IBillGenerator {
+	/**
+	 * @param customer
+	 * @param transaction
+	 * @param registerId
+	 * @return
+	 */
+	Bill generateBill(Customer customer, Transaction transaction, int registerId); 
+	
+}

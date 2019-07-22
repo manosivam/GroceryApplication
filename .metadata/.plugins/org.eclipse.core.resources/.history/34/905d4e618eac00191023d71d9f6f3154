@@ -1,0 +1,84 @@
+package in.grocery.Drivers;
+
+import in.grocery.customers.Cart;
+import in.grocery.customers.Customer;
+import in.grocery.customers.CustomerException;
+import in.grocery.customers.CustomerManager;
+import in.grocery.logs.Logger;
+import in.grocery.payments.transactions.ITransaction;
+import in.grocery.registers.IRegister;
+import in.grocery.registers.RegisterHelper;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Driver {
+
+	static Logger logger = Logger.getInstance();
+	
+	public static void main(String[] args){
+		
+		
+		
+		InputReader inputReader = InputReader.getInstance();
+		DriverUtils utils = DriverUtils.getInstance();
+		
+		DriverUtils.bootstrapApplication();
+		
+		//Input Step 1: To read the customer name.
+		//Input Step 2: Read Items to load into cart.
+		//Input Step 3: Read cash or card payment details
+		for(;;)
+		{
+			//Input Step 1: To read the customer name.
+			String customerNameOrStopApplicationInput = inputReader.readCustomerNameOrInputToStopTheApplication();
+			if(customerNameOrStopApplicationInput.equalsIgnoreCase(DriverConstants.STOP_COMMAND))
+			{
+				logger.logMessage("Stopping application and printing total sale happened today");
+				break;
+			}
+			else 
+			{
+				Customer customer = null;
+				try {
+					customer = CustomerManager.getInstance().getCustomerFromBackEnd(customerNameOrStopApplicationInput);
+				} catch (CustomerException e) {
+					logger.logMessage("Please enter the customer name from the above customer list.");
+					continue;
+				}
+				logger.logMessage("Customer \""+customerNameOrStopApplicationInput+"\" entered the grocery shop.");
+				
+				utils.displayItemsInInventoryToCustomer();
+				
+				//Input Step 2: Read Items to load into cart.
+				utils.readItemsAsInputAndLoadCart(customer.getCart());
+				
+				Cart cart = customer.getCart();
+				if(cart!=null && cart.getItemQuantityPair()!=null && cart.getItemQuantityPair().size()>0)
+				{
+					cart.seeAvailableItemsInCart();
+					
+					RegisterHelper registerHelper = RegisterHelper.getRegisterHelperInstance();
+					IRegister register = registerHelper.getAvailableRegisterInstance();
+					
+					double billAmount = utils.applyDiscountsByDefaultAndGetFinalBillAmount(cart, customer.getType(), customer.getDiscountPercent(), register);
+					
+					//Input Step 3:Read cash or card payment details
+					ITransaction transaction = utils.readPaymentInputFromCustomerAndInitiateTransaction(register,billAmount,customer);
+					utils.verifyTransactionStatus(transaction);
+					
+					utils.displayRemainingItemInInventory();
+				}
+				else
+				{
+					logger.logMessage("Your cart is empty. Thank you "+customer.getName()+" for visiting the shop");
+				}
+				
+				logger.logMessage("*****************************End of transaction******************************************\n\n");
+			}
+			
+		}
+		utils.printTotalSaleforToday();
+	}
+}

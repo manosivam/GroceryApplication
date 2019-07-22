@@ -1,0 +1,12 @@
+package in.grocery.customers;
+
+import in.grocery.Cart;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface ICustomer {
+
+	public boolean placeOrder(Cart cart, Card card, String pin);
+}

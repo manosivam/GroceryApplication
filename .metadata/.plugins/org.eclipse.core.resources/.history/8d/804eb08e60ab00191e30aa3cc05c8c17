@@ -1,0 +1,121 @@
+package in.grocery.customers;
+
+import in.grocery.Cart;
+import in.grocery.discounts.utils.DiscountManager;
+import in.grocery.registers.Register;
+import in.grocery.registers.RegisterHelper;
+
+/**
+ * @author Manosivam
+ *
+ */
+
+//TODO: why abstract. 
+public abstract class Customer{
+	
+	private int id; // id- after customer creation id will be populated from backend layer.
+	private int age; //input from Client. Can be used for discount purposes. senior citizen discount will be applied if age>60
+	private String name; //input from Client. For simplicity purpose, Assuming Customer name is unique.  
+	protected CustomerType type; 
+	protected double discountPercent;
+	protected Cart cart;
+	private Register register; 
+	private double amountToPay;
+	
+	Customer() {}
+	
+	public Customer(String name, int age) throws CustomerException
+	{
+		//TODO: should this handle the input validation?? or the CustomerManager 
+		if(name == null || name.trim().isEmpty())
+		{
+			throw new CustomerException("required customer name is empty or null. Please enter a valid name");
+		}
+		if(age<5)
+		{
+			throw new CustomerException("Please enter a valid age. Minimum permissible age is 6");
+		}
+		this.name = name;
+		this.age = age;
+		this.cart = new Cart();//assigning customer with a new cart. 
+	}
+	
+	/**
+	 * 
+	 * @param cart
+	 * @param card
+	 * @param pin
+	 * @return
+	 * @throws InterruptedException 
+	 */
+	public boolean placeOrder(Cart cart, Card card, PaymentMethod paymentMethod, String pin, boolean applyDiscountsOnCustomerType, 
+			boolean applyDisccountsOnItemOrItemType) {
+		
+		return new RegisterHelper().acceptOrderAndProcessPayment(this, pin, applyDiscountsOnCustomerType, 
+				applyDisccountsOnItemOrItemType);
+	}
+	
+	/** @param applyDiscountsOnCustomerType - based on customer type on the final prize. 
+	 * @param applyDisccountsOnItemOrItemType - based on Item or Item type on each of the items in the cart.
+	 *	Either applyDiscountOnCustomerType or applyDisccountsOnItemOrItemType can be applied. 
+	 *  applyDiscountOnCustomerType takes higher precedence if both are true.
+	 */   
+	public double applyDiscountAndGetFinalPriceToPay(this,boolean applyDiscountsOnCustomerType, 
+			boolean applyDisccountsOnItemOrItemType)
+	{
+		return this.getRegister().applyDiscountAndGetFinalPriceToPay(this, applyDiscountsOnCustomerType, applyDisccountsOnItemOrItemType);
+	}
+	
+	private Register getRegister()
+	{
+		if(this.register==null)
+		{
+			this.register = new RegisterHelper().getAvailableRegisterInstance();
+		}
+		return this.register;
+	}
+
+	
+	public int getId()
+	{
+		return this.id;
+	}
+	
+	//TODO. discount is dangling.??
+	public abstract double getDiscountPercent();
+	
+	public int getAge()
+	{
+		return this.age;
+	}
+	
+	public String getName()
+	{
+		return this.name;
+	}
+	
+	public CustomerType getType()
+	{
+		return this.type;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	public void setAge(int age)
+	{
+		this.age = age;
+	}
+	
+	public Cart getCart()
+	{
+		return this.cart;
+	}
+	
+}

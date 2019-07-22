@@ -1,0 +1,23 @@
+package org.grocery.customer;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Employee extends Customer{
+
+	/**
+	 * @param name
+	 * @param age
+	 * @throws CustomerException
+	 */
+	public Employee(String name, int age) throws CustomerException {
+		super(name, age);
+		this.type = CustomerType.EMPLOYEE;
+	}
+	private int employee_id; 
+	private Credentials credentials;
+	
+	
+	
+}

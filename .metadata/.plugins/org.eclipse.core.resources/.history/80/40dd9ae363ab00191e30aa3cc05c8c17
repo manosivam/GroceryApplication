@@ -1,0 +1,21 @@
+package in.grocery.Billing;
+
+import in.grocery.customers.Customer;
+import in.grocery.payments.Transaction;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Bill {
+
+	Customer customerDetails;
+	Transaction transactionDetails;
+	
+	public Bill(Customer customer, Transaction transaction)
+	{
+		this.customerDetails = customer; 
+		this.transactionDetails = transaction;
+	}
+	
+}

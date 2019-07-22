@@ -1,0 +1,15 @@
+package in.grocery.payments;
+
+import in.grocery.payments.transactions.Transaction;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface IPaymentProcessor {
+
+	public Transaction processPayment(double billAmount, double cashPaid);
+	
+	public Transaction processPayment(double billAmount, String cardNumber, String pin);
+	
+}

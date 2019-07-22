@@ -1,0 +1,39 @@
+package in.grocery.inventory.items;
+
+import java.util.Map;
+
+import in.grocery.backend.BackendLayer;
+import in.grocery.inventory.items.itemtypes.ItemTypeException;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemHandler {
+
+	private static ItemHandler itemHandler;
+	
+	private ItemHandler() {	}
+	
+	public static ItemHandler getInstance()
+	{
+		if(itemHandler == null)
+		{
+			itemHandler = new ItemHandler();
+		}
+		return itemHandler;
+	}
+	
+	//TODO: add interface for this.
+	public Map<Item,Integer> addNewItem(String name, double mrp,String itemTypeName, int quantity) throws ItemTypeException, ItemException
+	{
+		Item itemToAdd = new Item(name, mrp,itemTypeName);
+		return BackendLayer.addNewItemAndQuantityInDB(itemToAdd, quantity);
+	}
+	
+	public Item getItemFromId(int id) throws ItemException
+	{
+		return BackendLayer.getItemFromId(id);
+	}
+	
+}

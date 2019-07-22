@@ -1,0 +1,68 @@
+package in.grocery.automation;
+
+import java.util.Scanner;
+
+import in.grocery.inventory.items.ItemException;
+import in.grocery.logs.Logger;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class InputReader {
+
+	private static InputReader inputReader;
+	Scanner inputScanner;	
+	
+	Logger logger = Logger.getInstance();
+	
+	private InputReader()
+	{
+		inputScanner = new Scanner(System.in);
+	}
+	
+	public static InputReader getInputReaderInstance()
+	{
+		if(inputReader == null)
+		{
+			inputReader = new InputReader();
+		}
+		return inputReader;
+	}
+	
+	public String readCustomerNameOrInputToStopTheApplication()
+	{
+		//TODO: show all the customer names before prompting for customer Name.
+		logger.logMessage("waiting for a customer to enter. Please enter the customer name..."
+				+ "\nType stop to exit the application and print the total sale happened today");
+		logger.logMessage("-----------------------------------------------------");
+		String customerNameOrInputToStopTheApplication = "";
+		if(inputScanner.hasNextLine())//to read customer name. 
+		{
+			customerNameOrInputToStopTheApplication = inputScanner.nextLine();
+		}
+		return customerNameOrInputToStopTheApplication;
+	}
+	
+	public String readItemIdToLoadTheCartOrInputToPlaceTheOrder()
+	{
+		if(inputScanner.hasNextLine()) // to read items Id.
+		{
+			String itemIdToLoadTheCart = inputScanner.nextLine();
+			if(itemIdToLoadTheCart.equalsIgnoreCase("done"))
+			{
+				return "done";
+			}
+			else
+			{
+				
+				try {
+					customer.loadCart(itemHandler.getItemFromId(itemIdToLoadTheCart));
+				} catch (ItemException e) {
+					logger.logMessage("Please try loading from the available item list..");
+				}
+			}
+		}
+	}
+	
+}

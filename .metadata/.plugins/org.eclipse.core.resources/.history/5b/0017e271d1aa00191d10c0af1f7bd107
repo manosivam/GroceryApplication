@@ -1,0 +1,12 @@
+package org.grocery.inventory.items.itemtypes;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemTypeConstants {
+
+	public static String PACKAGED_FOOD_ITEM = "packaged food items"; 
+	
+	
+}

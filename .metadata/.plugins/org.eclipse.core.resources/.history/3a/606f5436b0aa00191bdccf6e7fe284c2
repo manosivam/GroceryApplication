@@ -1,0 +1,46 @@
+package org.grocery.customer.util;
+
+import org.grocery.customer.Customer;
+import org.grocery.customer.CustomerException;
+import org.grocery.customer.CustomerType;
+import org.grocery.customer.Employee;
+import org.grocery.customer.RegularCustomer;
+import org.grocery.customer.SeniorCitizen;
+
+/**
+ * @author Manosivam
+ * purpose : this can be used to create customers in DB and get appropriate customer Instance 
+ */
+public class CustomerFactory {
+
+	
+	public static Customer createNewCustomerInDB(String name, int age, String accountName, String accountPassword) throws CustomerException
+	{
+		Customer customer = null;
+		CustomerType type = CustomerType.REGULAR;
+		
+		if(accountName!=null || accountPassword !=null)
+		{
+			type = CustomerType.EMPLOYEE;
+		}
+		else if(age >60) 
+		{
+			type = CustomerType.SENIOR_CITIZEN;
+		}
+		
+		switch(type)
+		{
+		case REGULAR:
+			customer = new RegularCustomer(name, age);
+		break;
+		case SENIOR_CITIZEN:
+			customer = new SeniorCitizen(name,age);
+			break;
+		case EMPLOYEE:
+			customer = new Employee(name, age, accountName, accountPassword);
+			break;
+		}
+		return customer; 
+	}
+	
+}

@@ -1,0 +1,11 @@
+package org.grocery.customer;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface ICustomerManager {
+
+	public Customer createNewCustomer(String name, int age);
+	public boolean createNewEmployee(String name, int age, String accountName, String accountPassword);
+}

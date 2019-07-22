@@ -1,0 +1,26 @@
+package in.grocery.automation;
+
+import java.util.Scanner;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class InputReader {
+
+	private static Scanner inputReader;
+	
+	private InputReader()
+	{
+		
+	}
+	
+	public static InputReader getInputReaderInstance()
+	{
+		if(inputReader == null)
+		{
+			inputReader = new Scanner(Scanner.in);
+		}
+	}
+	
+}

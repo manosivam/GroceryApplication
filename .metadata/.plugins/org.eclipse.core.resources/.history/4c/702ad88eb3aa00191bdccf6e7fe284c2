@@ -1,0 +1,13 @@
+package org.grocery.discount;
+
+import org.grocery.customer.CustomerType;
+
+/**
+ * @author Manosivam
+ * Note: accessible only in this package. The interface is not public. 
+ */
+interface IDiscountManager {
+	
+	int getDiscount(CustomerType type);
+	int getDiscount(ItemType type);
+}

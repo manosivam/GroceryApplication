@@ -1,0 +1,12 @@
+package org.grocery.security;
+
+/**
+ * @author Manosivam
+ *
+ */
+//making it package specific. (default modifier)
+interface ICredentialsManager {
+
+	boolean authenticateCredential(Credentials credentials);
+	boolean changePassword()
+}

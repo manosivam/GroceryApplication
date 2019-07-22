@@ -1,0 +1,16 @@
+package in.grocery.payments;
+
+/**
+ * @author Manosivam
+ *
+ */
+public abstract class Payment {
+
+	PaymentMethod paymentMethod;
+	
+	public Payment(PaymentMethod method)
+	{
+		this.paymentMethod = method;
+	}
+	
+}

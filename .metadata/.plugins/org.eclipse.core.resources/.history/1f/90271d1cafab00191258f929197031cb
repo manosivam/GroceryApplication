@@ -1,0 +1,19 @@
+package in.grocery.utils;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class DateUtil {
+
+	public static String getCurrentDate()
+	{
+		DateTimeFormatter dateTimeformatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		LocalDateTime localDateTime = LocalDateTime.now();
+		return dateTimeformatter.format(localDateTime);
+	}
+	
+}

@@ -1,0 +1,27 @@
+package LogManager;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Logger {
+
+	private Logger logger = null;
+	
+	private Logger() {}
+	
+	public Logger getLogger()
+	{
+		if(logger == null)
+		{
+			logger = new Logger();
+		}
+		return logger;
+	}
+	
+	void println(String message)
+	{
+		System.out.println();
+	}
+	
+}

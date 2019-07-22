@@ -1,0 +1,11 @@
+package org.grocery.items.itemtypes;
+
+/**
+ * @author Manosivam
+ *
+ */
+//only package access.
+interface IItemTypeHandler {
+	public 
+	
+}

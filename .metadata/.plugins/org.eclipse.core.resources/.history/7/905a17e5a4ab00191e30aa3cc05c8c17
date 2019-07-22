@@ -1,0 +1,88 @@
+package in.grocery;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import in.grocery.backend.BackendLayer;
+import in.grocery.inventory.items.Item;
+import in.grocery.inventory.items.ItemException;
+
+/**
+ * @author Manosivam
+ *
+ */
+
+//TODO: do we need Interface for this???
+public class Cart{
+	
+	private Map<Item, Integer> itemCounts;
+	double cartValue;//live cost of the items in the cart.
+	
+	public Cart(){
+		itemCounts = new HashMap<Item, Integer>();
+		cartValue = 0;
+	}
+	
+	public Map<Item, Integer> getItemCounts()
+	{
+		return this.itemCounts;
+	}
+	
+	public void setItemCounts(Map<Item,Integer> itemCounts)
+	{
+		this.itemCounts = itemCounts;
+	}
+	
+	public double getCartValue()
+	{
+		return this.cartValue;
+	}
+	
+	//TODO: should this be inside the card.
+	public double recomputeCartValueAfterApplyingDiscounts()
+	{
+		double finalPrize = this.cartValue;
+		
+		finalPrize =0;
+		//apply discount. 
+		for(Map.Entry<Item, Integer> entry: this.itemCounts.entrySet())
+		{
+			Item item = entry.getKey();
+			double mrpAfterDiscount = item.getMRP() - (item.getMRP() * item.getDiscountPercent()/100);
+			//TODO: logs to check the values.
+			finalPrize += (mrpAfterDiscount + item.getTax()) * entry.getValue(); 
+		}
+		
+		return finalPrize;
+	}
+	
+	/*
+	 * Can load Items one by One.
+	 */
+	public void loadItem(Item item)
+	{
+		//for readability using == operator. 
+		if(BackendLayer.isItemAvailableInStock(item) == false)
+		{
+			throw new ItemException("Item Not available.");
+		}
+		int count = 1,earlierCount;
+		if(this.itemCounts.containsKey(item))
+		{
+			earlierCount = this.itemCounts.get(item);
+			count+=earlierCount;
+		}
+		this.itemCounts.put(item, count);
+		this.cartValue+= (item.getMRP() + item.getTax()) * 1; 
+	}
+	
+	/*
+	 * can unload item one by one.
+	 */
+	public void unLoadItem(Item item)
+	{
+		this.cartValue-= (item.getMRP()+item.getTax()) *1;
+		this.itemCounts.remove(item);
+	}
+	
+}

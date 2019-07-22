@@ -1,0 +1,12 @@
+package in.grocery.processor;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Processor {
+	
+	//When customer enters. How do I know if the customer is entering. 
+	
+	
+}

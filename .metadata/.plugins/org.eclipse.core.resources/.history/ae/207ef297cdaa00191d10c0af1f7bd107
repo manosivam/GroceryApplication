@@ -1,0 +1,11 @@
+package org.grocery.taxes;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Tax {
+
+	double tax; 
+	
+}

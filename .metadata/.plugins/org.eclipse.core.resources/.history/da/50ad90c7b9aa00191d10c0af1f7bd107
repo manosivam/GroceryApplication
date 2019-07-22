@@ -1,0 +1,22 @@
+package org.grocery.items.itemtype;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemTypeHandler {
+
+	static int itemTypeId = 1;
+	
+	public ItemType createNewItemTypeInDB(String name) throws ItemTypeException
+	{
+		if(name == null || name.trim().isEmpty())
+		{
+			String errorMessage = "empty or null item type.";
+			throw new ItemTypeException(errorMessage);
+		}
+		
+		
+	}
+	
+}

@@ -1,0 +1,9 @@
+package in.grocery.payments.transactions;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class CardTransaction {
+
+}

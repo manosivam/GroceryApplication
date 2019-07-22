@@ -1,0 +1,22 @@
+package in.grocery;
+
+import java.util.Map;
+
+import in.grocery.inventory.items.Item;
+import in.grocery.inventory.items.ItemException;
+import in.grocery.inventory.items.itemtypes.ItemTypeException;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface IInventoryManager {
+
+	public Map<Item, Integer> getCurrentAvailableItemsDetails();
+	
+	public double getTotalSaleHappened(String dateString);
+	
+	public void printRemainingItemInInventory();
+	
+	public Map<Item,Integer> addItemsInInventory(String name, double mrp, String itemTypeName, int quantity) throws ItemTypeException, ItemException;
+}

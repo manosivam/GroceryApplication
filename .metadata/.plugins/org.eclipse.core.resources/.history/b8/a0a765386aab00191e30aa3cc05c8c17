@@ -1,0 +1,14 @@
+package in.grocery.payments;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class PaymentHelper {
+
+	public Payment getPaymentInstance(String cashPaid)
+	{
+		Payment payment = new CashPayment(cashPaid); 
+	}
+	
+}

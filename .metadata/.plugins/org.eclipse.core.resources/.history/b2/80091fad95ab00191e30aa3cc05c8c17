@@ -1,0 +1,20 @@
+package in.grocery.payments.transactions;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class CashTransaction extends Transaction{
+
+	private double payBackAmount;
+	
+	public CashTransaction() {
+		this.payBackAmount = 0.0;
+	}
+	
+	
+	public double getPayBackAmount()
+	{
+		return this.payBackAmount;
+	}
+}

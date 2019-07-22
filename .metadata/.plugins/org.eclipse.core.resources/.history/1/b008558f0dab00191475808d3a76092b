@@ -1,0 +1,9 @@
+package in.grocery.registers;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface IRegisterHandler {
+
+}

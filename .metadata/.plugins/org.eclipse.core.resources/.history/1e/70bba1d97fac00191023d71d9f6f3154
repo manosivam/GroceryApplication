@@ -1,0 +1,31 @@
+package in.grocery.inventory;
+
+import java.util.Map;
+
+import in.grocery.backend.BackendLayer;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemHandler {
+
+	
+	//TODO: this class not needed. should go into InventoryManager.
+	private static ItemHandler itemHandler;
+	
+	private ItemHandler() {	}
+	
+	public static ItemHandler getInstance()
+	{
+		if(itemHandler == null)
+		{
+			itemHandler = new ItemHandler();
+		}
+		return itemHandler;
+	}
+	
+	//TODO: add interface for this.
+
+	
+}

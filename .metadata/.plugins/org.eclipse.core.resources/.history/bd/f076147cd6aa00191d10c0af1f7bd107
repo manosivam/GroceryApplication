@@ -1,0 +1,16 @@
+package org.grocery;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Inventory {
+
+	Map<String, Integer> itemQuantityPair = new HashMap<String,Integer>();
+	
+}
+
+

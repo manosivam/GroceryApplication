@@ -1,0 +1,33 @@
+package in.grocery.inventory;
+
+import java.util.ArrayList;
+
+import in.grocery.backend.BackendLayer;
+import in.grocery.backend.DBLayer;
+import in.grocery.logs.Logger;
+
+/**
+ * 
+ * 
+ * @author Manosivam
+ *
+ */
+public class ItemTypeHandler {
+
+	Logger logger = Logger.getInstance();
+	static ItemTypeHandler itemTypeHandler; 
+	
+	private ItemTypeHandler() {}
+	
+	public static ItemTypeHandler getInstance()
+	{
+		if(itemTypeHandler == null)
+		{
+			itemTypeHandler = new ItemTypeHandler();
+		}
+		return itemTypeHandler;
+	}
+	
+
+	
+}

@@ -1,0 +1,73 @@
+package in.grocery.Drivers;
+
+import java.util.Scanner;
+
+import in.grocery.inventory.items.ItemException;
+import in.grocery.logs.Logger;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class InputReader {
+
+	private static InputReader inputReader;
+	private Scanner inputScanner;	
+	Logger logger;
+	
+	private InputReader()
+	{
+		logger = Logger.getInstance();
+		inputScanner = new Scanner(System.in);
+	}
+	
+	public static InputReader getInstance()
+	{
+		if(inputReader == null)
+		{
+			inputReader = new InputReader();
+		}
+		return inputReader;
+	}
+	
+	public String readCustomerNameOrInputToStopTheApplication()
+	{
+		//TODO: show all the customer names before prompting for customer Name.
+		logger.logMessage("waiting for a customer to enter. Please enter the customer name from the above list.."
+				+ "\nType stop to exit the application and print the total sale happened today");
+		logger.logMessage("-----------------------------------------------------");
+		String customerNameOrInputToStopTheApplication = "";
+		if(inputScanner.hasNextLine())//to read customer name. 
+		{
+			customerNameOrInputToStopTheApplication = inputScanner.nextLine();
+		}
+		return customerNameOrInputToStopTheApplication;
+	}
+	
+	public String readItemIdToLoadTheCartOrInputToPlaceTheOrder()
+	{
+		logger.logMessage("Please load the cart by typing in item Id.. Refer the above item list. "
+				+ "\nNote: Items can be loaded one by one. "
+				+ "If multiple items are needed, please load the same item for the required quantity by repeating the Item Id. "
+				+ "Thank you for your understanding. "
+				+ "\nType done to place the order.");
+		
+		String itemIdToLoadTheCartOrInputToPlaceTheOrder = "";
+		if(inputScanner.hasNextLine()) // to read items Id.
+		{
+			itemIdToLoadTheCartOrInputToPlaceTheOrder = inputScanner.nextLine();
+		}
+		return itemIdToLoadTheCartOrInputToPlaceTheOrder;
+	}
+	
+	public String readALine()
+	{
+		String input = "";
+		if(inputScanner.hasNextLine())
+		{
+			input = inputScanner.nextLine();
+		}	
+		return input;
+	}
+	
+}

@@ -1,0 +1,85 @@
+package org.grocery.inventory.items;
+
+import org.grocery.discounts.utils.DiscountManager;
+import org.grocery.inventory.items.itemtypes.ItemType;
+import org.grocery.inventory.items.itemtypes.ItemTypeException;
+import org.grocery.taxes.TaxFinder;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Item {
+
+	int id;
+	String name; 
+	double mrp; 
+	ItemType type;
+	double tax; 
+	
+	Item(){
+	}
+	
+	public Item(String name, double mrp,String itemTypeName) throws ItemTypeException, ItemException
+	{
+		if(name == null || mrp<0 || name.trim().isEmpty())
+		{
+			throw new ItemException("invalid name or mrp");
+		}
+		this.name = name;
+		this.mrp = mrp;
+		this.type = new ItemType(itemTypeName);
+		this.tax = findTax();
+	}
+	
+	private double findTax()
+	{
+		new TaxFinder().getTaxBasedOnItemType(this.type.getName());
+	}
+	
+	public int getDiscount()
+	{
+		return new DiscountManager().getDiscount(type);
+	}
+	
+	public String getName()
+	{
+		return this.name;
+	}
+	
+	public int getId()
+	{
+		return this.id;
+	}
+	
+	public double getMRP()
+	{
+		return this.mrp;
+	}
+	
+	public ItemType getItemType()
+	{
+		return this.type;
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name; 
+	}
+	
+	public void setId(int id )
+	{
+		this.id = id; 
+	}
+	
+	public void setMRP(double mrp)
+	{
+		this.mrp = mrp; 
+	}
+	
+	public void setType(ItemType type)
+	{
+		this.type = type; 
+	}
+	
+}

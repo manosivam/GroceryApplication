@@ -1,0 +1,16 @@
+package org.grocery.items.itemtypes;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class ItemTypeHandler {
+
+	static int itemTypeId = 1;
+	
+	public ItemType createNewItemTypeInDB(String name)
+	{
+		
+	}
+	
+}

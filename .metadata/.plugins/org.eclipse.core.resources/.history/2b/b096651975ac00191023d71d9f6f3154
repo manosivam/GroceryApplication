@@ -1,0 +1,65 @@
+package in.grocery.customers.utils;
+
+import in.grocery.backend.BackendLayer;
+import in.grocery.customers.Customer;
+import in.grocery.customers.CustomerException;
+import in.grocery.customers.CustomerHandler;
+
+/**
+ * 
+ * <p>
+ * 	This is similar to controller code. 
+ * 	This will just accept input and call appropriate Handler which will take care of processing and backend call. 
+ * <p>
+ * 
+ * @author Manosivam
+ */
+public class CustomerManager implements ICustomerManager{
+	
+	private static CustomerManager customerManager;
+	
+	private CustomerManager() {
+		
+	}
+	
+	public static CustomerManager getInstance()
+	{
+		if(customerManager == null)
+		{
+			customerManager = new CustomerManager();
+		}
+		return customerManager;
+	}
+	
+	@Override
+	public Customer createNewCustomer(String name, int age) throws CustomerException {
+		// Create Customer object with the supplied input and call backend to write new customer in DB.
+		// on success, return Customer object which can be use in client to show or assert 
+		return new CustomerHandler().createNewCustomerInDB(name, age, null, null);
+	}
+
+	@Override
+	public Customer createNewCustomer(String name, int age, String accountName, String accountPassword) throws CustomerException {
+		// Create Customer object with the supplied input and call backend to write new customer in DB.
+		// on success, return Customer object which can be use in client to show or assert 
+		return new CustomerHandler().createNewCustomerInDB(name, age, accountName, accountPassword);
+	}
+	
+	@Override
+	public Customer getCustomerFromBackEnd(String name) throws CustomerException {
+		return BackendLayer.getCustomerDetails(name);
+	}
+	
+	public void printRegisteredCustomers()
+	{
+		Map<String, Customer> nameCustomerMap = BackendLayer.getRegisteredCustomers();
+		
+	}
+
+	@Override
+	public boolean deleteEmployee(String name) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+}

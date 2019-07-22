@@ -1,0 +1,73 @@
+1563587118742	Rename package 'org.grocery'
+1563587381258	Delete element
+1563592156387	Rename type 'CredentialsManager'
+1563592190722	Rename compilation unit 'ICredentialsManager.java'
+1563592842994	Rename compilation unit 'DBLayer.java'
+1563598454547	Rename package 'org.grocery.util.discount'
+1563598500736	Move compilation units
+1563600585898	Move compilation unit
+1563602309699	Rename package 'org.grocery.customer.util'
+1563602378803	Move compilation units
+1563602387066	Rename package 'org.grocery.customer'
+1563602697754	Rename package 'LogManager'
+1563603114726	Rename type 'CustomerFactory'
+1563603439351	Rename package 'org.grocery.customers.util'
+1563603491713	Move compilation unit
+1563603496562	Move compilation unit
+1563603520551	Rename package 'org.grocery.items.itemtype'
+1563603638444	Delete element
+1563604072425	Rename package 'org.grocery.items.itemtypes'
+1563605397664	Copy package
+1563605438131	Copy package
+1563605478911	Delete elements
+1563611492920	Rename package 'org.grocery.customers.customer'
+1563611531949	Rename package 'org.grocery.discount'
+1563611552112	Rename package 'org.grocery.inventory.items.item'
+1563611567934	Rename package 'org.grocery.inventory.items.itemtype'
+1563611603857	Rename package 'org.grocery.items.utils'
+1563611653509	Move compilation unit
+1563613258610	Delete element
+1563613560598	Delete element
+1563615214722	Delete element
+1563616077397	Rename method 'createItemTypeInDB'
+1563616094553	Rename method 'createNewItemTypeInDB'
+1563616935810	Delete element
+1563617332406	Delete element
+1563617336753	Delete element
+1563617379320	Rename package 'org.grocery'
+1563617391148	Rename package 'org.grocery.backend'
+1563617405041	Rename package 'org.grocery.customers'
+1563617413974	Rename package 'org.grocery.customers.utils'
+1563617420878	Rename package 'org.grocery.discounts.utils'
+1563617427748	Rename package 'org.grocery.inventory.items'
+1563617435534	Rename package 'org.grocery.inventory.items.itemtypes'
+1563617441742	Rename package 'org.grocery.logs'
+1563617448850	Rename package 'org.grocery.security'
+1563617454621	Rename package 'org.grocery.taxes'
+1563627526855	Delete element
+1563633415992	Rename compilation unit 'PaymentResponse.java'
+1563633986638	Rename local variable 'response'
+1563634136251	Rename local variable 'tranNumber'
+1563637216048	Delete element
+1563637646180	Copy compilation unit
+1563637652572	Move compilation unit
+1563637660502	Delete element
+1563639726024	Move compilation unit
+1563640277213	Rename field 'registers'
+1563641400010	Rename field 'taxItemTypeMap'
+1563642644759	Rename local variable 'finalDiscount'
+1563642786770	Rename method 'getDiscount'
+1563642811574	Rename field 'itemDiscount'
+1563642818254	Rename field 'tax'
+1563642829559	Rename method 'getDiscount'
+1563642848128	Rename method 'getDiscountForItemTypeOrItem'
+1563642862540	Rename method 'getDiscount'
+1563642869582	Rename method 'getDiscountForCustomerType'
+1563642878384	Rename method 'getDiscountForCustomerTypeFromDB'
+1563642939967	Rename field 'discount'
+1563643836198	Rename field 'totalPrizeBeforeApplyingDiscount'
+1563643990390	Rename field 'totalPrizeWithoutDiscount'
+1563644392513	Rename field 'taxPercent'
+1563644686185	Rename method 'computeFinalPrize'
+1563645224334	Rename method 'getDiscount'
+1563645576050	Rename type 'PaymentMethods'

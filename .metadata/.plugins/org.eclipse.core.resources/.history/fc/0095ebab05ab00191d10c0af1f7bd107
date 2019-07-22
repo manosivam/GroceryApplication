@@ -1,0 +1,40 @@
+package in.grocery.registers;
+
+import in.grocery.Cart;
+import in.grocery.customers.Card;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Register {
+
+	int registerId; 
+	
+	private Register(int registerId){
+		this.registerId = registerId;
+	}
+
+	/**
+	 * 
+	 */
+	public static Register getAvailableRegister(){
+		//This will check for available Register and pick one from the list. 
+		//if none is available, null will be returned. Customer has to wait for some time (in queue) before retrying.
+		return 
+	}
+
+	/**
+	 * @param cart
+	 * @param card
+	 * @param pin
+	 * @param applyDiscount
+	 */
+	public void placeOrder(Cart cart, Card card, String pin, boolean applyDiscount) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+}

@@ -1,0 +1,26 @@
+package org.grocery.customer;
+
+import org.grocery.util.discount.DiscountManager;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class RegularCustomer extends Customer{
+
+	/**
+	 * @param name
+	 * @throws CustomerException 
+	 */
+	public RegularCustomer(String name, int age) throws CustomerException {
+		super(name,age);
+		this.type = CustomerType.REGULAR;
+	}
+
+	@Override
+	int getDiscount()
+	{
+		return super.getDiscount();
+	}
+	
+}

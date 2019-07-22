@@ -1,0 +1,9 @@
+package org.grocery.security;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Credentials {
+
+}

@@ -1,0 +1,49 @@
+package in.grocery.payments;
+
+/**
+ * @author Manosivam
+ *
+ */
+public class Transaction {
+
+	private boolean status;
+	private double payBackAmount;
+	private String transactionNumber;
+	
+	public Transaction()
+	{
+		status = false; 
+		payBackAmount = 0;
+		transactionNumber = "";
+	}
+	
+	public boolean isTransactionSuccessful()
+	{
+		return this.status;
+	}
+	
+	public double getPayBackAmountIfAny()
+	{
+		return this.payBackAmount;
+	}
+	
+	public String getTrasactionNumber()
+	{
+		return this.transactionNumber;
+	}
+	
+	public void setTransactionStatus(boolean status)
+	{
+		this.status = status;
+	}
+	
+	public void setPayBackAmount(double paybackAmount)
+	{
+		this.payBackAmount = paybackAmount;
+	}
+	
+	public void setTrasactionNumber(String transactionNumber)
+	{
+		this.transactionNumber = transactionNumber;
+	}
+}

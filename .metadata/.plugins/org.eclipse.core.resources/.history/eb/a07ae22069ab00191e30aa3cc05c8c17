@@ -1,0 +1,17 @@
+package in.grocery.payments;
+
+/**
+ * @author Manosivam
+ *
+ */
+class CardPayment extends Payment{
+	
+	Card 
+	
+	public CardPayment(PaymentMethod method, String cardNumber) {
+		super(method);
+		// TODO Auto-generated constructor stub
+	}
+
+	
+}

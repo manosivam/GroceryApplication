@@ -1,0 +1,13 @@
+package in.grocery.payments.transactions;
+
+/**
+ * @author Manosivam
+ *
+ */
+public interface ICashInterface extends ITransaction{
+
+	void setPayBackCash(double payBackCash);
+
+	double getPayBackAmountIfAny();
+
+}
