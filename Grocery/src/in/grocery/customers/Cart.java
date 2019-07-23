@@ -104,4 +104,11 @@ public class Cart{
 		}
 	}
 	
+	public void emptyCart() {
+		this.cartValue = 0.0;
+		this.itemQuantityPair.clear();
+	}
+	
+	
+	
 }

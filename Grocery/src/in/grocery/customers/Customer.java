@@ -74,14 +74,4 @@ public abstract class Customer{
 		return this.cart;
 	}
 	
-	public void loadCart(Item item) throws ItemException
-	{
-		this.cart.loadItem(item);
-	}
-	
-	public void emptyCart()
-	{
-		this.cart = new Cart();
-	}
-	
 }

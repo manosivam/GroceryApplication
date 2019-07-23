@@ -98,7 +98,7 @@ public class DriverUtils {
 		{
 			transaction = register.acceptPaymentAndProcessTheOrderForCustomer(billAmount, cardNumber, pin, customer);
 		}
-		customer.emptyCart();//Since the Customer object is a static one in DBLayer, this has to be called for the same customer to re-enter the shop.
+		customer.getCart().emptyCart();//Since the Customer object is a static one in DBLayer, this has to be called for the same customer to re-enter the shop.
 		//However, this may not be required in production environment where static variables will not be maintained.
 		
 		return transaction;
